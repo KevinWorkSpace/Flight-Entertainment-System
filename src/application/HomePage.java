@@ -6,11 +6,11 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -22,7 +22,23 @@ public class HomePage extends Application {
 	
 	private Stage stage;
 	
+	private String language;
+	
 	private BorderPane rootLayout;
+	
+	private RootLayoutController rootLayoutController;
+	
+	public String getLanguage() {
+		return language;
+	}
+	
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
+	public RootLayoutController getRootLayoutController() {
+		return rootLayoutController;
+	}
 	
 	public BorderPane getRootLayout() {
 		return rootLayout;
@@ -40,25 +56,15 @@ public class HomePage extends Application {
 		return stage;
 	}
 	
-	public void initRootLayout() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-            Scene scene = new Scene(rootLayout);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException, SQLException {
+		language = "Chinese";
 		stage = primaryStage;
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("RootLayout.fxml"));
         rootLayout = (BorderPane) loader.load();
+        rootLayoutController = loader.getController();
+        rootLayoutController.setHomePage(this);
         Scene scene = new Scene(rootLayout);
         stage.setScene(scene);
 		FXMLLoader loader2 = new FXMLLoader();

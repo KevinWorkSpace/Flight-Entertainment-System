@@ -68,7 +68,7 @@ public class LanguageController {
         functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
         functionController.getBack_button().setText(p.getProperty("back_button_CN"));
         functionController.setHomePage(hp);
-        functionController.setLanguage("Chinese");
+        functionController.setLanguage("English");
         hp.getRootLayout().setCenter(functionPane);
         hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
 	}
