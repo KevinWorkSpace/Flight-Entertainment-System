@@ -65,24 +65,20 @@ public class MovieController {
 		String movieName = null;
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			movieName = movielist.getSelectionModel().getSelectedItem();
-		File file= new File("Movies");
-		String[] filelist = file.list();
-		String MEDIA_URL = null;
-		for(int i=0; i<filelist.length; i++) {
-			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
-				break;
+			File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+			String[] filelist = file.list();
+			String MEDIA_URL = null;
+			for(int i=0; i<filelist.length; i++) {
+				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+				if(name.equals(movieName)) {
+					MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+					break;
+				}
 			}
-		}
-		Media media = new Media(MEDIA_URL);
-		MediaPlayer mp = new MediaPlayer(media);
-		mp.setAutoPlay(true);
-		
-//			FXMLLoader loader = new FXMLLoader();
-//	        loader.setLocation(getClass().getResource("Media.fxml"));
-//	        BorderPane mediaPane = (BorderPane)loader.load();
-//	        MediaController mediaController = loader.getController();
+			Media media = new Media(MEDIA_URL);
+			MediaPlayer mp = new MediaPlayer(media);
+			mp.setAutoPlay(true);
+			
 			MediaControl mediaControl = new MediaControl(mp);
 			hp.getRootLayout().setCenter(mediaControl);
 	        mediaControl.setHomePage(hp);
@@ -105,7 +101,7 @@ public class MovieController {
         p = new Properties(); 
         p.load(in);
 		ObservableList<String> items =FXCollections.observableArrayList();
-		File file= new File("Movies");
+		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
 		String[] filelist = file.list();
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
