@@ -13,6 +13,18 @@ public class RootLayoutController {
 	
 	private HomePage hp;
 	
+	private MenuItem englishVersion;
+	
+	private MenuItem chineseVersion;
+	
+	public MenuItem getEnglishVersion() {
+		return englishVersion;
+	}
+	
+	public MenuItem getChineseVersion() {
+		return chineseVersion;
+	}
+	
 	public void setHomePage(HomePage hp) {
 		this.hp = hp;
 	}
@@ -26,11 +38,11 @@ public class RootLayoutController {
 		menuBar.getMenus().clear();
 		Menu menuLanguage = new Menu("Language");
 		menuBar.getMenus().add(menuLanguage);
-		MenuItem englishVersion = new MenuItem("English");
+		englishVersion = new MenuItem("English");
 		englishVersion.setOnAction((ActionEvent t) -> {
             hp.setLanguage("English");
         });        
-		MenuItem chineseVersion = new MenuItem("Chinese");
+		chineseVersion = new MenuItem("Chinese");
 		chineseVersion.setOnAction((ActionEvent t) -> {
             hp.setLanguage("Chinese");
         });

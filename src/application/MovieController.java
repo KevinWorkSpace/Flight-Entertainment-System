@@ -3,6 +3,7 @@ package application;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -10,6 +11,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +32,10 @@ public class MovieController {
 	private String language;
 	
 	private Properties p;
+	
+	private MediaPlayer mp;
+	
+	private String movieName;
 	
 	public String getLanguage() {
 		return language;
@@ -62,7 +68,6 @@ public class MovieController {
 	
 	@FXML
 	public void selectMovie() throws Exception {
-		String movieName = null;
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			movieName = movielist.getSelectionModel().getSelectedItem();
 			File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
@@ -76,11 +81,17 @@ public class MovieController {
 				}
 			}
 			Media media = new Media(MEDIA_URL);
-			MediaPlayer mp = new MediaPlayer(media);
+			mp = new MediaPlayer(media);
 			mp.setAutoPlay(true);
 			
 			MediaControl mediaControl = new MediaControl(mp);
 			hp.getRootLayout().setCenter(mediaControl);
+			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+	            reloadMediaChineseVersion();
+	        });
+	        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+	            reloadMediaEnglishVersion();
+	        });
 	        mediaControl.setHomePage(hp);
 	        mediaControl.setLanguage(language);
 	        if(language.equals("Chinese")) {
@@ -92,6 +103,24 @@ public class MovieController {
 	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	        }
 		}
+	}
+	
+	public void reloadMediaChineseVersion() {
+		MediaControl mediaControl = new MediaControl(mp);
+		mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+		mediaControl.setHomePage(hp);
+		mediaControl.setLanguage("Chinese");
+        hp.getRootLayout().setCenter(mediaControl);
+        hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
+	}
+	
+	public void reloadMediaEnglishVersion() {
+		MediaControl mediaControl = new MediaControl(mp);
+		mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
+		mediaControl.setHomePage(hp);
+		mediaControl.setLanguage("English");
+        hp.getRootLayout().setCenter(mediaControl);
+        hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	}
 	
 	
@@ -154,7 +183,55 @@ public class MovieController {
         }
         functionController.setLanguage(language);
         functionController.setHomePage(hp);
+      //改变语言, 重新加载界面
+        hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            reloadFunctionChineseVersion();
+        });
+        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            reloadFunctionEnglishVersion();
+        });
         hp.getRootLayout().setCenter(root);
 	}
+	
+	public void reloadFunctionChineseVersion() {
+		hp.setLanguage("Chinese");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
+        BorderPane functionPane = null;
+        try {
+			functionPane = (BorderPane)loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        FunctionController functionController = loader.getController();
+        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_CN"));
+        functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
+        functionController.getBack_button().setText(p.getProperty("back_button_CN"));
+        functionController.setHomePage(hp);
+        functionController.setLanguage("Chinese");
+        hp.getRootLayout().setCenter(functionPane);
+        hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
+	}
+	
+	public void reloadFunctionEnglishVersion() {
+		hp.setLanguage("English");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
+        BorderPane functionPane = null;
+        try {
+			functionPane = (BorderPane)loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        FunctionController functionController = loader.getController();
+        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_US"));
+        functionController.getMovie_button().setText(p.getProperty("movie_button_US"));
+        functionController.getBack_button().setText(p.getProperty("back_button_US"));
+        functionController.setHomePage(hp);
+        functionController.setLanguage("English");
+        hp.getRootLayout().setCenter(functionPane);
+        hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
+	}
+
 	
 }

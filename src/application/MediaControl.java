@@ -2,6 +2,8 @@ package application;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -96,6 +98,34 @@ public class MediaControl extends BorderPane {
         mediaBar.getChildren().add(back_button);
  
         final Button playButton  = new Button(">");
+        playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                	Status status = mp.getStatus();
+                    
+                    if (status == Status.UNKNOWN  || status == Status.HALTED)
+                    {
+                       // don't do anything in these states
+                       return;
+                    }
+             
+                      if ( status == Status.PAUSED
+                         || status == Status.READY
+                         || status == Status.STOPPED)
+                      {
+                         // rewind the movie if we're sitting at the end
+                         if (atEndOfMedia) {
+                            mp.seek(mp.getStartTime());
+                            atEndOfMedia = false;
+                         }
+                         mp.play();
+                         } else {
+                           mp.pause();
+                         }
+                }
+            }
+        });
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Status status = mp.getStatus();
@@ -235,6 +265,64 @@ public class MediaControl extends BorderPane {
         	hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
         }
         hp.getRootLayout().setCenter(moviePane);
+        hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadMovieChineseVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadMovieEnglishVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+	}
+    
+    private void reloadMovieEnglishVersion() throws Exception {
+    	InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
+        Properties p = new Properties(); 
+        p.load(in);
+		hp.setLanguage("English");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
+        BorderPane root = null;
+        try {
+			root = (BorderPane)loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        MovieController movieController = loader.getController();
+        movieController.getBack_button().setText(p.getProperty("back_button_US"));
+        movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_US"));
+        movieController.setHomePage(hp);
+        movieController.setLanguage("English");
+        hp.getRootLayout().setCenter(root);
+        hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
+	}
+
+	private void reloadMovieChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
+        Properties p = new Properties(); 
+        p.load(in);
+		hp.setLanguage("Chinese");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
+        BorderPane root = null;
+        try {
+			root = (BorderPane)loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        MovieController movieController = loader.getController();
+        movieController.getBack_button().setText(p.getProperty("back_button_CN"));
+        movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_CN"));
+        movieController.setHomePage(hp);
+        movieController.setLanguage("Chinese");
+        hp.getRootLayout().setCenter(root);
+        hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
 	}
 
 

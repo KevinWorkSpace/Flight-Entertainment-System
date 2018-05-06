@@ -16,7 +16,7 @@
    <bottom>
       <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Button fx:id="back_button" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#backToChooseLanguage" text="返回" />
+            <Button fx:id="back_button" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#backToWelcome" text="返回" />
          </children>
       </HBox>
    </bottom>
