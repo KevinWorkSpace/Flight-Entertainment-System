@@ -300,6 +300,7 @@ public class MediaControl extends BorderPane {
         movieController.setHomePage(hp);
         movieController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
 	}
 
@@ -322,6 +323,7 @@ public class MediaControl extends BorderPane {
         movieController.setHomePage(hp);
         movieController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
 	}
 

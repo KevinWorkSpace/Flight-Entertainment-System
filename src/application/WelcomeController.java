@@ -98,6 +98,7 @@ public class WelcomeController {
         functionController.setHomePage(hp);
         functionController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(functionPane);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
 	}
 	
@@ -117,6 +118,7 @@ public class WelcomeController {
         functionController.setHomePage(hp);
         functionController.setLanguage("English");
         hp.getRootLayout().setCenter(functionPane);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
 	}
 	

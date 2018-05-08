@@ -108,6 +108,7 @@ public class HomePage extends Application {
         welcomeController.setHomePage(this);
         welcomeController.setLanguage("English");
         rootLayout.setCenter(root);
+        rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title_US"));
 	}
 
@@ -127,6 +128,7 @@ public class HomePage extends Application {
         welcomeController.setHomePage(this);
         welcomeController.setLanguage("Chinese");
         rootLayout.setCenter(root);
+        rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title_CN"));
 	}
 

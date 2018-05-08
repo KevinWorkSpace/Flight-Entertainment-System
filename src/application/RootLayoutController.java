@@ -11,11 +11,17 @@ public class RootLayoutController {
 	@FXML
 	private MenuBar menuBar;
 	
+	private Menu menuLanguage;
+	
 	private HomePage hp;
 	
 	private MenuItem englishVersion;
 	
 	private MenuItem chineseVersion;
+	
+	public Menu getMenuLanguage() {
+		return menuLanguage;
+	}
 	
 	public MenuItem getEnglishVersion() {
 		return englishVersion;
@@ -36,13 +42,13 @@ public class RootLayoutController {
 	@FXML
 	private void initialize() {
 		menuBar.getMenus().clear();
-		Menu menuLanguage = new Menu("Language");
+		menuLanguage = new Menu("Language");
 		menuBar.getMenus().add(menuLanguage);
 		englishVersion = new MenuItem("English");
 		englishVersion.setOnAction((ActionEvent t) -> {
             hp.setLanguage("English");
         });        
-		chineseVersion = new MenuItem("Chinese");
+		chineseVersion = new MenuItem("中文");
 		chineseVersion.setOnAction((ActionEvent t) -> {
             hp.setLanguage("Chinese");
         });

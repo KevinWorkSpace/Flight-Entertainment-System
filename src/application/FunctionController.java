@@ -103,6 +103,7 @@ public class FunctionController {
         welcomeController.setHomePage(hp);
         welcomeController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         hp.getStage().setTitle(p.getProperty("welcomeStage_title_US"));
 	}
 
@@ -122,6 +123,7 @@ public class FunctionController {
         welcomeController.setHomePage(hp);
         welcomeController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         hp.getStage().setTitle(p.getProperty("welcomeStage_title_CN"));
 	}
 	
@@ -169,6 +171,7 @@ public class FunctionController {
         movieController.setHomePage(hp);
         movieController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
 	}
 
@@ -188,6 +191,7 @@ public class FunctionController {
         movieController.setHomePage(hp);
         movieController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
 	}
 
