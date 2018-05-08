@@ -67,9 +67,25 @@ public class MovieController {
 	}
 	
 	@FXML
+	private Label seenBefore_label;
+	
+	@FXML
+	private Button lastMovie_button;
+	
+	public Label getSeenBefore_label() {
+		return seenBefore_label;
+	}
+	
+	public Button getLastMovie_button() {
+		return lastMovie_button;
+	}
+	
+	@FXML
 	public void selectMovie() throws Exception {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
+			hp.setSeenMovie(true);
 			movieName = movielist.getSelectionModel().getSelectedItem();
+			hp.setLastMovieName(movieName);
 			File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
 			String[] filelist = file.list();
 			String MEDIA_URL = null;
@@ -83,7 +99,6 @@ public class MovieController {
 			Media media = new Media(MEDIA_URL);
 			mp = new MediaPlayer(media);
 			mp.setAutoPlay(true);
-			
 			MediaControl mediaControl = new MediaControl(mp);
 			hp.getRootLayout().setCenter(mediaControl);
 			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
@@ -95,11 +110,9 @@ public class MovieController {
 	        mediaControl.setHomePage(hp);
 	        mediaControl.setLanguage(language);
 	        if(language.equals("Chinese")) {
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
 	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
 	        }
 	        else if(language.equals("English")) {
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
 	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	        }
 		}
@@ -107,7 +120,6 @@ public class MovieController {
 	
 	public void reloadMediaChineseVersion() {
 		MediaControl mediaControl = new MediaControl(mp);
-		mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
 		mediaControl.setHomePage(hp);
 		mediaControl.setLanguage("Chinese");
         hp.getRootLayout().setCenter(mediaControl);
@@ -117,7 +129,6 @@ public class MovieController {
 	
 	public void reloadMediaEnglishVersion() {
 		MediaControl mediaControl = new MediaControl(mp);
-		mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
 		mediaControl.setHomePage(hp);
 		mediaControl.setLanguage("English");
         hp.getRootLayout().setCenter(mediaControl);
@@ -237,5 +248,40 @@ public class MovieController {
         hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
 	}
 
-	
+	@FXML
+	public void continueWatching() {
+		movieName = hp.getLastMovieName();
+		hp.setLastMovieName(movieName);
+		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		String[] filelist = file.list();
+		String MEDIA_URL = null;
+		for(int i=0; i<filelist.length; i++) {
+			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+			if(name.equals(movieName)) {
+				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				break;
+			}
+		}
+		Media media = new Media(MEDIA_URL);
+		mp = new MediaPlayer(media);
+		mp.setAutoPlay(true);
+		MediaControl mediaControl = new MediaControl(mp);
+		hp.getRootLayout().setCenter(mediaControl);
+		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaChineseVersion();
+        });
+        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaEnglishVersion();
+        });
+        mediaControl.setHomePage(hp);
+        mediaControl.setLanguage(language);
+        if(language.equals("Chinese")) {
+        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
+        }
+        else if(language.equals("English")) {
+        	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
+        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
+        }
+	}
 }

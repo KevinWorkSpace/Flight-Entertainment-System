@@ -10,12 +10,10 @@ import java.util.Properties;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
 public class HomePage extends Application {
@@ -33,6 +31,36 @@ public class HomePage extends Application {
 	private RootLayoutController rootLayoutController;
 	
 	private WelcomeController welcomeController;
+	
+	private boolean seenMovie;
+	
+	private String lastMovieName;
+	
+	private MediaView mediaView;
+	
+	public MediaView getMediaView() {
+		return mediaView;
+	}
+	
+	public void setMediaView(MediaView mediaView) {
+		this.mediaView = mediaView;
+	}
+	
+	public String getLastMovieName() {
+		return lastMovieName;
+	}
+	
+	public void setLastMovieName(String movieName) {
+		this.lastMovieName = movieName;
+	}
+	
+	public boolean haveSeenMovie() {
+		return seenMovie;
+	}
+	
+	public void setSeenMovie(boolean isSeen) {
+		seenMovie = isSeen;
+	}
 	
 	public String getLanguage() {
 		return language;
@@ -67,6 +95,7 @@ public class HomePage extends Application {
 		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
         p = new Properties(); 
         p.load(in);
+        seenMovie = false;
 		language = "Chinese";
 		stage = primaryStage;
 		FXMLLoader loader = new FXMLLoader();
@@ -91,7 +120,6 @@ public class HomePage extends Application {
 				e.printStackTrace();
 			}
         });
-        
         rootLayout.setCenter(root);
         primaryStage.setTitle("Welcome");
         primaryStage.show();

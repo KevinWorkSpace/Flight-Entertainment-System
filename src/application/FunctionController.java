@@ -138,12 +138,25 @@ public class FunctionController {
         	movieController.getBack_button().setText(p.getProperty("back_button_CN"));
         	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_CN"));
         	movieController.setLanguage("Chinese");
+        	//如果还没有看过电影
+        	if(!hp.haveSeenMovie()) {
+        		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_CN"));
+        	}
+        	else {
+        		movieController.getSeenBefore_label().setText(p.getProperty(hp.getLastMovieName()));
+        	}
         	hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
         }
         else if(language.equals("English")) {
         	movieController.getBack_button().setText(p.getProperty("back_button_US"));
         	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_US"));
         	movieController.setLanguage("English");
+        	if(!hp.haveSeenMovie()) {
+        		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_US"));
+        	}
+        	else {
+        		movieController.getSeenBefore_label().setText(p.getProperty(hp.getLastMovieName()));
+        	}
         	hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
         }
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
@@ -168,6 +181,13 @@ public class FunctionController {
         MovieController movieController = loader.getController();
         movieController.getBack_button().setText(p.getProperty("back_button_US"));
         movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_US"));
+        movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_US"));
+        if(!hp.haveSeenMovie()) {
+    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_US"));
+    	}
+    	else {
+    		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+    	}
         movieController.setHomePage(hp);
         movieController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
@@ -188,6 +208,13 @@ public class FunctionController {
         MovieController movieController = loader.getController();
         movieController.getBack_button().setText(p.getProperty("back_button_CN"));
         movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_CN"));
+        movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_CN"));
+        if(!hp.haveSeenMovie()) {
+    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_CN"));
+    	}
+    	else {
+    		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+    	}
         movieController.setHomePage(hp);
         movieController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
@@ -225,5 +252,4 @@ public class FunctionController {
             }
         });
 	}
-	
 }

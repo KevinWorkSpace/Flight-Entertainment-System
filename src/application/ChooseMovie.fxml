@@ -17,6 +17,16 @@
       <Label fx:id="movieChoose_label" text="请选择电影" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <ListView fx:id="movielist" onMouseReleased="#selectMovie" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="movielist" onMouseReleased="#selectMovie" prefHeight="362.0" prefWidth="418.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="362.0" prefWidth="221.0" spacing="30.0">
+               <children>
+                  <Label fx:id="seenBefore_label" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="221.0" text="刚刚看到" />
+                  <Button fx:id="lastMovie_button" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#continueWatching" prefHeight="23.0" prefWidth="182.0" text="您还没有看过任何电影" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </center>
 </BorderPane>

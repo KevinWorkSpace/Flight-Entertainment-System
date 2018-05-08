@@ -71,7 +71,7 @@ public class MediaControl extends BorderPane {
         BorderPane.setAlignment(mediaBar, Pos.CENTER);
         
         //Add Back button
-        back_button = new Button();
+        back_button = new Button("<<");
         back_button.setPrefWidth(50);
         back_button.setMinWidth(50);
         back_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -247,6 +247,7 @@ public class MediaControl extends BorderPane {
         Properties p = new Properties(); 
         p.load(in);
 		mediaView.getMediaPlayer().stop();
+		hp.setMediaView(mediaView);
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
         BorderPane moviePane = (BorderPane)loader.load();
@@ -256,12 +257,27 @@ public class MediaControl extends BorderPane {
         	movieController.getBack_button().setText(p.getProperty("back_button_CN"));
         	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_CN"));
         	movieController.setLanguage("Chinese");
+        	if(!hp.haveSeenMovie()) {
+        		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_CN"));
+        	}
+        	else {
+        		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+        		System.out.println();
+        	}
+        	movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_CN"));
         	hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
         }
         else if(language.equals("English")) {
         	movieController.getBack_button().setText(p.getProperty("back_button_US"));
         	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_US"));
         	movieController.setLanguage("English");
+        	if(!hp.haveSeenMovie()) {
+        		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_US"));
+        	}
+        	else {
+        		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+        	}
+        	movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_US"));
         	hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
         }
         hp.getRootLayout().setCenter(moviePane);
@@ -299,6 +315,13 @@ public class MediaControl extends BorderPane {
         movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_US"));
         movieController.setHomePage(hp);
         movieController.setLanguage("English");
+        movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_US"));
+        if(!hp.haveSeenMovie()) {
+    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_US"));
+    	}
+    	else {
+    		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+    	}
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
@@ -322,6 +345,13 @@ public class MediaControl extends BorderPane {
         movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label_CN"));
         movieController.setHomePage(hp);
         movieController.setLanguage("Chinese");
+        movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_CN"));
+        if(!hp.haveSeenMovie()) {
+    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_CN"));
+    	}
+    	else {
+    		movieController.getLastMovie_button().setText(hp.getLastMovieName());
+    	}
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
