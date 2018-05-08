@@ -119,21 +119,62 @@ public class MovieController {
 	}
 	
 	public void reloadMediaChineseVersion() {
+		mp.pause();
+		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		String[] filelist = file.list();
+		String MEDIA_URL = null;
+		for(int i=0; i<filelist.length; i++) {
+			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+			if(name.equals(movieName)) {
+				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				break;
+			}
+		}
+		Media media = new Media(MEDIA_URL);
+		mp = new MediaPlayer(media);
+		mp.setAutoPlay(true);
 		MediaControl mediaControl = new MediaControl(mp);
-		mediaControl.setHomePage(hp);
-		mediaControl.setLanguage("Chinese");
-        hp.getRootLayout().setCenter(mediaControl);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
-        hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
+		hp.getRootLayout().setCenter(mediaControl);
+		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaChineseVersion();
+        });
+        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaEnglishVersion();
+        });
+        mediaControl.setHomePage(hp);
+        mediaControl.setLanguage(language);
+        mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+    	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
+	
 	}
 	
 	public void reloadMediaEnglishVersion() {
+		mp.pause();
+		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		String[] filelist = file.list();
+		String MEDIA_URL = null;
+		for(int i=0; i<filelist.length; i++) {
+			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+			if(name.equals(movieName)) {
+				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				break;
+			}
+		}
+		Media media = new Media(MEDIA_URL);
+		mp = new MediaPlayer(media);
+		mp.setAutoPlay(true);
 		MediaControl mediaControl = new MediaControl(mp);
-		mediaControl.setHomePage(hp);
-		mediaControl.setLanguage("English");
-        hp.getRootLayout().setCenter(mediaControl);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
-        hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
+		hp.getRootLayout().setCenter(mediaControl);
+		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaChineseVersion();
+        });
+        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            reloadMediaEnglishVersion();
+        });
+        mediaControl.setHomePage(hp);
+        mediaControl.setLanguage(language);
+        mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
+    	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	}
 	
 	
@@ -277,10 +318,12 @@ public class MovieController {
         mediaControl.setLanguage(language);
         if(language.equals("Chinese")) {
         	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
         	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
         }
         else if(language.equals("English")) {
         	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
+        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
         	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
         }
 	}

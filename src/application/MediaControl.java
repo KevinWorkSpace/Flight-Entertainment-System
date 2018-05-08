@@ -71,7 +71,7 @@ public class MediaControl extends BorderPane {
         BorderPane.setAlignment(mediaBar, Pos.CENTER);
         
         //Add Back button
-        back_button = new Button("<<");
+        back_button = new Button("返回");
         back_button.setPrefWidth(50);
         back_button.setMinWidth(50);
         back_button.setOnAction(new EventHandler<ActionEvent>() {
