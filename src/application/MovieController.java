@@ -86,13 +86,13 @@ public class MovieController {
 			hp.setSeenMovie(true);
 			movieName = movielist.getSelectionModel().getSelectedItem();
 			hp.setLastMovieName(movieName);
-			File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+			File file= new File(hp.getFilePath());
 			String[] filelist = file.list();
 			String MEDIA_URL = null;
 			for(int i=0; i<filelist.length; i++) {
 				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 				if(name.equals(movieName)) {
-					MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+					MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i]; 
 					break;
 				}
 			}
@@ -120,13 +120,13 @@ public class MovieController {
 	
 	public void reloadMediaChineseVersion() {
 		mp.pause();
-		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
 				break;
 			}
 		}
@@ -142,7 +142,8 @@ public class MovieController {
             reloadMediaEnglishVersion();
         });
         mediaControl.setHomePage(hp);
-        mediaControl.setLanguage(language);
+        mediaControl.setLanguage("Chinese");
+        hp.setLanguage("Chinese");
         mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
     	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
 	
@@ -150,13 +151,13 @@ public class MovieController {
 	
 	public void reloadMediaEnglishVersion() {
 		mp.pause();
-		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
 				break;
 			}
 		}
@@ -172,7 +173,8 @@ public class MovieController {
             reloadMediaEnglishVersion();
         });
         mediaControl.setHomePage(hp);
-        mediaControl.setLanguage(language);
+        mediaControl.setLanguage("English");
+        hp.setLanguage("English");
         mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
     	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	}
@@ -184,7 +186,7 @@ public class MovieController {
         p = new Properties(); 
         p.load(in);
 		ObservableList<String> items =FXCollections.observableArrayList();
-		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		File file= new File("F:/Science/Ajava2/Project/Movies");
 		String[] filelist = file.list();
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
@@ -293,13 +295,13 @@ public class MovieController {
 	public void continueWatching() {
 		movieName = hp.getLastMovieName();
 		hp.setLastMovieName(movieName);
-		File file= new File("F:\\Science\\Ajava2\\Project\\Movies");
+		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///F:/Science/Ajava2/Project/Movies/" + filelist[i];
+				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
 				break;
 			}
 		}

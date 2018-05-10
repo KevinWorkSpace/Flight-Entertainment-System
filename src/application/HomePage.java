@@ -41,6 +41,12 @@ public class HomePage extends Application {
 	
 	private String vname;
 	
+	private String filePath = "F:/Science/Ajava2/Project/Movies";
+	
+	public String getFilePath() {
+		return filePath;
+	}
+	
 	public String getVname() {
 		return vname;
 	}
