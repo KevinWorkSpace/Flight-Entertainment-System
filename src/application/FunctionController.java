@@ -104,6 +104,7 @@ public class FunctionController {
         welcomeController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
         hp.getStage().setTitle(p.getProperty("welcomeStage_title_US"));
 	}
 
@@ -124,6 +125,7 @@ public class FunctionController {
         welcomeController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         hp.getStage().setTitle(p.getProperty("welcomeStage_title_CN"));
 	}
 	
@@ -141,9 +143,11 @@ public class FunctionController {
         	//如果还没有看过电影
         	if(!hp.haveSeenMovie()) {
         		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label_CN"));
+        		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button_CN"));
         	}
         	else {
         		movieController.getSeenBefore_label().setText(p.getProperty(hp.getLastMovieName()));
+        		movieController.getLastMovie_button().setText(hp.getLastMovieName());
         	}
         	hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
         }
@@ -192,6 +196,7 @@ public class FunctionController {
         movieController.setLanguage("English");
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
 	}
 
@@ -219,6 +224,7 @@ public class FunctionController {
         movieController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
 	}
 

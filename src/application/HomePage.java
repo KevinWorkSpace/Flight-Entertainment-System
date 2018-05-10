@@ -125,6 +125,7 @@ public class HomePage extends Application {
         rootLayout = (BorderPane) loader.load();
         rootLayoutController = loader.getController();
         rootLayoutController.setHomePage(this);
+        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         Scene scene = new Scene(rootLayout);
         scene.getStylesheets().add(cssURL);
         stage.setScene(scene);
@@ -184,6 +185,7 @@ public class HomePage extends Application {
         welcomeController.setHomePage(this);
         welcomeController.setLanguage("English");
         rootLayout.setCenter(root);
+        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_US"));
         rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title_US"));
 	}
@@ -204,6 +206,7 @@ public class HomePage extends Application {
         welcomeController.setHomePage(this);
         welcomeController.setLanguage("Chinese");
         rootLayout.setCenter(root);
+        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title_CN"));
 	}

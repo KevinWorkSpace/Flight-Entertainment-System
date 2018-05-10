@@ -29,6 +29,10 @@ public class RootLayoutController {
 	
 	private MenuItem chineseVersion;
 	
+	public Menu getMenuCSS() {
+		return menuCSS;
+	}
+	
 	public MenuItem getV1() {
 		return v1;
 	}

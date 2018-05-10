@@ -324,6 +324,7 @@ public class MediaControl extends BorderPane {
     	}
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_US"));
 	}
 
@@ -354,6 +355,7 @@ public class MediaControl extends BorderPane {
     	}
         hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         hp.getStage().setTitle(p.getProperty("movieStage_title_CN"));
 	}
 

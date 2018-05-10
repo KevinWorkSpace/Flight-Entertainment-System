@@ -144,6 +144,8 @@ public class MovieController {
         mediaControl.setHomePage(hp);
         mediaControl.setLanguage("Chinese");
         hp.setLanguage("Chinese");
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
         mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
     	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
 	
@@ -175,6 +177,8 @@ public class MovieController {
         mediaControl.setHomePage(hp);
         mediaControl.setLanguage("English");
         hp.setLanguage("English");
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
         mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
     	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
 	}
@@ -267,6 +271,7 @@ public class MovieController {
         functionController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(functionPane);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
         hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
 	}
 	
@@ -288,6 +293,7 @@ public class MovieController {
         functionController.setLanguage("English");
         hp.getRootLayout().setCenter(functionPane);
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
         hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
 	}
 
@@ -295,6 +301,7 @@ public class MovieController {
 	public void continueWatching() {
 		movieName = hp.getLastMovieName();
 		hp.setLastMovieName(movieName);
+		hp.setSeenMovie(true);
 		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
