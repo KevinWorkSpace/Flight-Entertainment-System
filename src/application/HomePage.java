@@ -43,6 +43,12 @@ public class HomePage extends Application {
 	
 	private String filePath = "F:/Science/Ajava2/Project/Movies";
 	
+	private String cssPath = "F:/Science/Ajava2/Project/CSS";
+	
+	public String getCssPath() {
+		return cssPath;
+	}
+	
 	public String getFilePath() {
 		return filePath;
 	}
@@ -114,9 +120,9 @@ public class HomePage extends Application {
 		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
         p = new Properties(); 
         p.load(in);
-        File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+        File file= new File(this.getCssPath());
 		String[] filelist = file.list();
-		cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[0];
+		cssURL = "file:///" + this.getCssPath() + "/" + filelist[0];
         seenMovie = false;
 		language = "Chinese";
 		stage = primaryStage;
@@ -161,13 +167,13 @@ public class HomePage extends Application {
 	}
 	
 	public void changeCSS(String vname, Scene scene) {
-		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+		File file= new File(this.getCssPath());
 		String[] filelist = file.list();
 		String cssURL = null;
 		for(int i=0; i<3; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 			if(vname.equals(name)) {
-				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
+				cssURL = "file:///" + this.getCssPath() + "/" + filelist[i];
 			}
 		}
 		scene.getStylesheets().clear();
