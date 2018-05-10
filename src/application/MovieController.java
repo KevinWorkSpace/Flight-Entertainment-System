@@ -303,28 +303,30 @@ public class MovieController {
 				break;
 			}
 		}
-		Media media = new Media(MEDIA_URL);
-		mp = new MediaPlayer(media);
-		mp.setAutoPlay(true);
-		MediaControl mediaControl = new MediaControl(mp);
-		hp.getRootLayout().setCenter(mediaControl);
-		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaChineseVersion();
-        });
-        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaEnglishVersion();
-        });
-        mediaControl.setHomePage(hp);
-        mediaControl.setLanguage(language);
-        if(language.equals("Chinese")) {
-        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
-        }
-        else if(language.equals("English")) {
-        	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
-        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
-        }
+		if(MEDIA_URL != null) {
+			Media media = new Media(MEDIA_URL);
+			mp = new MediaPlayer(media);
+			mp.setAutoPlay(true);
+			MediaControl mediaControl = new MediaControl(mp);
+			hp.getRootLayout().setCenter(mediaControl);
+			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+	            reloadMediaChineseVersion();
+	        });
+	        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+	            reloadMediaEnglishVersion();
+	        });
+	        mediaControl.setHomePage(hp);
+	        mediaControl.setLanguage(language);
+	        if(language.equals("Chinese")) {
+	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
+	        }
+	        else if(language.equals("English")) {
+	        	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
+	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
+	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
+	        }
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package application;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +81,30 @@ public class WelcomeController {
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
             reloadEnglishVersion();
         });
+        
+//        hp.getRootLayoutController().getV1().setOnAction((ActionEvent t) -> {
+//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
+//        });
+//        hp.getRootLayoutController().getV2().setOnAction((ActionEvent t) -> {
+//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
+//        });
+//        hp.getRootLayoutController().getV3().setOnAction((ActionEvent t) -> {
+//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
+//        });
 	}
+	
+//	public void changeCSS(String vname, BorderPane root) {
+//		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+//		String[] filelist = file.list();
+//		String cssURL = null;
+//		for(int i=0; i<3; i++) {
+//			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+//			if(vname.equals(name)) {
+//				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
+//			}
+//		}
+//		root.getStylesheets().add(cssURL);
+//	}
 	
 	public void reloadChineseVersion() {
 		hp.setLanguage("Chinese");

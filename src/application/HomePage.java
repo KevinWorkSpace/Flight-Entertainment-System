@@ -1,6 +1,7 @@
 package application;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +38,18 @@ public class HomePage extends Application {
 	private String lastMovieName;
 	
 	private MediaView mediaView;
+	
+	private String vname;
+	
+	public String getVname() {
+		return vname;
+	}
+	
+	private String cssURL;
+	
+	public String getCssURL() {
+		return cssURL;
+	}
 	
 	public MediaView getMediaView() {
 		return mediaView;
@@ -95,6 +108,9 @@ public class HomePage extends Application {
 		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
         p = new Properties(); 
         p.load(in);
+        File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+		String[] filelist = file.list();
+		cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[0];
         seenMovie = false;
 		language = "Chinese";
 		stage = primaryStage;
@@ -104,6 +120,7 @@ public class HomePage extends Application {
         rootLayoutController = loader.getController();
         rootLayoutController.setHomePage(this);
         Scene scene = new Scene(rootLayout);
+        scene.getStylesheets().add(cssURL);
         stage.setScene(scene);
 		FXMLLoader loader2 = new FXMLLoader();
         loader2.setLocation(HomePage.class.getResource("Welcome.fxml"));
@@ -121,10 +138,34 @@ public class HomePage extends Application {
 			}
         });
         rootLayout.setCenter(root);
+        
+//        rootLayoutController.getV1().setOnAction((ActionEvent t) -> {
+//        	changeCSS(rootLayoutController.getV1().getText(), root);
+//        });
+//        rootLayoutController.getV2().setOnAction((ActionEvent t) -> {
+//        	changeCSS(rootLayoutController.getV2().getText(), root);
+//        });
+//        rootLayoutController.getV3().setOnAction((ActionEvent t) -> {
+//        	changeCSS(rootLayoutController.getV3().getText(), root);
+//        });
+        
         primaryStage.setTitle("Welcome");
         primaryStage.show();
 	}
-
+	
+//	public void changeCSS(String vname, BorderPane root) {
+//		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+//		String[] filelist = file.list();
+//		String cssURL = null;
+//		for(int i=0; i<3; i++) {
+//			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+//			if(vname.equals(name)) {
+//				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
+//			}
+//		}
+//		root.getStylesheets().add(cssURL);
+//	}
+	
 	private void reloadEnglishVersion() throws IOException {
 		this.setLanguage("English");
         FXMLLoader loader = new FXMLLoader();
