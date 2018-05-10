@@ -145,32 +145,33 @@ public class HomePage extends Application {
         });
         rootLayout.setCenter(root);
         
-//        rootLayoutController.getV1().setOnAction((ActionEvent t) -> {
-//        	changeCSS(rootLayoutController.getV1().getText(), root);
-//        });
-//        rootLayoutController.getV2().setOnAction((ActionEvent t) -> {
-//        	changeCSS(rootLayoutController.getV2().getText(), root);
-//        });
-//        rootLayoutController.getV3().setOnAction((ActionEvent t) -> {
-//        	changeCSS(rootLayoutController.getV3().getText(), root);
-//        });
+        rootLayoutController.getV1().setOnAction((ActionEvent t) -> {
+        	changeCSS(rootLayoutController.getV1().getText(), scene);
+        });
+        rootLayoutController.getV2().setOnAction((ActionEvent t) -> {
+        	changeCSS(rootLayoutController.getV2().getText(), scene);
+        });
+        rootLayoutController.getV3().setOnAction((ActionEvent t) -> {
+        	changeCSS(rootLayoutController.getV3().getText(), scene);
+        });
         
         primaryStage.setTitle("Welcome");
         primaryStage.show();
 	}
 	
-//	public void changeCSS(String vname, BorderPane root) {
-//		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
-//		String[] filelist = file.list();
-//		String cssURL = null;
-//		for(int i=0; i<3; i++) {
-//			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-//			if(vname.equals(name)) {
-//				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
-//			}
-//		}
-//		root.getStylesheets().add(cssURL);
-//	}
+	public void changeCSS(String vname, Scene scene) {
+		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+		String[] filelist = file.list();
+		String cssURL = null;
+		for(int i=0; i<3; i++) {
+			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+			if(vname.equals(name)) {
+				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
+			}
+		}
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add(cssURL);
+	}
 	
 	private void reloadEnglishVersion() throws IOException {
 		this.setLanguage("English");

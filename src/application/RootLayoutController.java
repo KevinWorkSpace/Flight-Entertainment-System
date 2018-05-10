@@ -76,20 +76,20 @@ public class RootLayoutController {
         });
 		menuLanguage.getItems().add(englishVersion);
 		menuLanguage.getItems().add(chineseVersion);
-//		menuCSS = new Menu("Style");
-//		menuBar.getMenus().add(menuCSS);
-//		v1 = new MenuItem("");
-//		v2 = new MenuItem("");
-//		v3 = new MenuItem("");
-//		menuCSS.getItems().add(v1);
-//		menuCSS.getItems().add(v2);
-//		menuCSS.getItems().add(v3);
-//		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
-//		String[] filelist = file.list();
-//		for(int i=0; i<3; i++) {
-//			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-//			menuCSS.getItems().get(i).setText(name);
-//		}
+		menuCSS = new Menu("Style");
+		menuBar.getMenus().add(menuCSS);
+		v1 = new MenuItem("");
+		v2 = new MenuItem("");
+		v3 = new MenuItem("");
+		menuCSS.getItems().add(v1);
+		menuCSS.getItems().add(v2);
+		menuCSS.getItems().add(v3);
+		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+		String[] filelist = file.list();
+		for(int i=0; i<3; i++) {
+			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+			menuCSS.getItems().get(i).setText(name);
+		}
 	}
 	
 }
