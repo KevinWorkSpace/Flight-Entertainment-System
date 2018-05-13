@@ -3,6 +3,7 @@ package application;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -27,14 +28,12 @@ public class WelcomeController {
 	
 	private HomePage hp;
 	
-	private String language;
-	
-	public String getLanguage() {
-		return language;
+	public void setProperties(Properties p) {
+		this.p = p;
 	}
 	
-	public void setLanguage(String language) {
-		this.language = language;
+	public Properties getProperties() {
+		return p;
 	}
 	
 	public void setHomePage(HomePage hp) {
@@ -57,58 +56,32 @@ public class WelcomeController {
 	
 	@FXML
 	public void enterSystem() {
-		if(hp.getLanguage().equals("Chinese")) {
-			functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_CN"));
-	        functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
-	        functionController.getBack_button().setText(p.getProperty("back_button_CN"));
-	        hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
-		}
-		else if(hp.getLanguage().equals("English")) {
-			functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_US"));
-	        functionController.getMovie_button().setText(p.getProperty("movie_button_US"));
-	        functionController.getBack_button().setText(p.getProperty("back_button_US"));
-	        hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
-		}
+		functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
+        functionController.getMovie_button().setText(p.getProperty("movie_button"));
+        functionController.getBack_button().setText(p.getProperty("back_button"));
+        hp.getStage().setTitle(p.getProperty("functionStage_title"));
         functionController.setHomePage(hp);
-        functionController.setLanguage(hp.getLanguage());
+        functionController.setProperties(p);
         hp.getRootLayout().setCenter(functionPane);
-        
-        
         //改变语言, 重新加载界面
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadChineseVersion();
+            try {
+				reloadChineseVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            reloadEnglishVersion();
+            try {
+				reloadEnglishVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
-        
-//        hp.getRootLayoutController().getV1().setOnAction((ActionEvent t) -> {
-//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
-//        });
-//        hp.getRootLayoutController().getV2().setOnAction((ActionEvent t) -> {
-//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
-//        });
-//        hp.getRootLayoutController().getV3().setOnAction((ActionEvent t) -> {
-//        	changeCSS(hp.getRootLayoutController().getV1().getText(), functionPane);
-//        });
 	}
 	
-//	public void changeCSS(String vname, BorderPane root) {
-//		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
-//		String[] filelist = file.list();
-//		String cssURL = null;
-//		for(int i=0; i<3; i++) {
-//			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-//			if(vname.equals(name)) {
-//				cssURL = "file:///F:/Science/Ajava2/Project/CSS/" + filelist[i];
-//			}
-//		}
-//		root.getStylesheets().add(cssURL);
-//	}
-	
-	public void reloadChineseVersion() {
-		hp.setLanguage("Chinese");
-        FXMLLoader loader = new FXMLLoader();
+	public void update() {
+		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
         try {
 			functionPane = (BorderPane)loader.load();
@@ -116,41 +89,34 @@ public class WelcomeController {
 			e.printStackTrace();
 		}
         functionController = loader.getController();
-        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_CN"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
-        functionController.getBack_button().setText(p.getProperty("back_button_CN"));
+        functionController.setProperties(p);
+        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
+        functionController.getMovie_button().setText(p.getProperty("movie_button"));
+        functionController.getBack_button().setText(p.getProperty("back_button"));
         functionController.setHomePage(hp);
         functionController.setLanguage("Chinese");
         hp.getRootLayout().setCenter(functionPane);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+        hp.getStage().setTitle(p.getProperty("functionStage_title"));
 	}
 	
-	public void reloadEnglishVersion() {
-		hp.setLanguage("English");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
-        try {
-			functionPane = (BorderPane)loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        functionController = loader.getController();
-        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_US"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button_US"));
-        functionController.getBack_button().setText(p.getProperty("back_button_US"));
-        functionController.setHomePage(hp);
-        functionController.setLanguage("English");
-        hp.getRootLayout().setCenter(functionPane);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
+	public void reloadChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        update();
+	}
+	
+	public void reloadEnglishVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        update();
 	}
 	
 	@FXML
 	private void initialize() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
-        p = new Properties(); 
-        p.load(in);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
         functionPane = (BorderPane)loader.load();

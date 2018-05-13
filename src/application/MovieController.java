@@ -3,6 +3,7 @@ package application;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -29,22 +30,16 @@ public class MovieController {
 	
 	private HomePage hp;
 	
-	private String language;
-	
 	private Properties p;
 	
 	private MediaPlayer mp;
 	
 	private String movieName;
 	
-	public String getLanguage() {
-		return language;
+	public void setProperties(Properties p) {
+		this.p = p;
 	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
+	
 	@FXML
 	private Button back_button;
 	
@@ -86,40 +81,13 @@ public class MovieController {
 			hp.setSeenMovie(true);
 			movieName = movielist.getSelectionModel().getSelectedItem();
 			hp.setLastMovieName(movieName);
-			File file= new File(hp.getFilePath());
-			String[] filelist = file.list();
-			String MEDIA_URL = null;
-			for(int i=0; i<filelist.length; i++) {
-				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-				if(name.equals(movieName)) {
-					MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i]; 
-					break;
-				}
-			}
-			Media media = new Media(MEDIA_URL);
-			mp = new MediaPlayer(media);
-			mp.setAutoPlay(true);
-			MediaControl mediaControl = new MediaControl(mp);
-			hp.getRootLayout().setCenter(mediaControl);
-			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-	            reloadMediaChineseVersion();
-	        });
-	        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-	            reloadMediaEnglishVersion();
-	        });
-	        mediaControl.setHomePage(hp);
-	        mediaControl.setLanguage(language);
-	        if(language.equals("Chinese")) {
-	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
-	        }
-	        else if(language.equals("English")) {
-	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
-	        }
+			updateMedia();
 		}
 	}
 	
-	public void reloadMediaChineseVersion() {
-		mp.pause();
+	public void updateMedia() {
+		if(mp != null)
+			mp.pause();
 		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
@@ -134,61 +102,49 @@ public class MovieController {
 		mp = new MediaPlayer(media);
 		mp.setAutoPlay(true);
 		MediaControl mediaControl = new MediaControl(mp);
+		mediaControl.setProperties(p);
 		hp.getRootLayout().setCenter(mediaControl);
 		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaChineseVersion();
+            try {
+				reloadMediaChineseVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaEnglishVersion();
+            try {
+				reloadMediaEnglishVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         mediaControl.setHomePage(hp);
-        mediaControl.setLanguage("Chinese");
-        hp.setLanguage("Chinese");
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
-        mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-    	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
-	
+        mediaControl.setProperties(p);
+        mediaControl.getBack_button().setText(p.getProperty("back_button"));
+    	hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
 	}
 	
-	public void reloadMediaEnglishVersion() {
-		mp.pause();
-		File file= new File(hp.getFilePath());
-		String[] filelist = file.list();
-		String MEDIA_URL = null;
-		for(int i=0; i<filelist.length; i++) {
-			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
-				break;
-			}
-		}
-		Media media = new Media(MEDIA_URL);
-		mp = new MediaPlayer(media);
-		mp.setAutoPlay(true);
-		MediaControl mediaControl = new MediaControl(mp);
-		hp.getRootLayout().setCenter(mediaControl);
-		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaChineseVersion();
-        });
-        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            reloadMediaEnglishVersion();
-        });
-        mediaControl.setHomePage(hp);
-        mediaControl.setLanguage("English");
-        hp.setLanguage("English");
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
-        mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
-    	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
+	public void reloadMediaChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateMedia();
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+	}
+	
+	public void reloadMediaEnglishVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateMedia();
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
 	}
 	
 	
 	@FXML
 	private void initialize() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
-        p = new Properties(); 
-        p.load(in);
 		ObservableList<String> items =FXCollections.observableArrayList();
 		File file= new File("F:/Science/Ajava2/Project/Movies");
 		String[] filelist = file.list();
@@ -223,78 +179,56 @@ public class MovieController {
         });
 	}
 	
-	@FXML
-	public void backToChooseFunction() throws Exception {
+	public void updateFunction() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
         BorderPane root = (BorderPane)loader.load();
         FunctionController functionController = loader.getController();
-        if(language.equals("Chinese")) {
-        	functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_CN"));
-        	functionController.getBack_button().setText(p.getProperty("back_button_CN"));
-        	functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
-        	hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
-        }
-        else if(language.equals("English")) {
-        	functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_US"));
-        	functionController.getBack_button().setText(p.getProperty("back_button_US"));
-        	functionController.getMovie_button().setText(p.getProperty("movie_button_US"));
-        	hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
-        }
-        functionController.setLanguage(language);
+        functionController.setProperties(p);
+    	functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
+    	functionController.getBack_button().setText(p.getProperty("back_button"));
+    	functionController.getMovie_button().setText(p.getProperty("movie_button"));
+    	hp.getStage().setTitle(p.getProperty("functionStage_title"));
         functionController.setHomePage(hp);
       //改变语言, 重新加载界面
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadFunctionChineseVersion();
+            try {
+				reloadFunctionChineseVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            reloadFunctionEnglishVersion();
+            try {
+				reloadFunctionEnglishVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         hp.getRootLayout().setCenter(root);
 	}
 	
-	public void reloadFunctionChineseVersion() {
-		hp.setLanguage("Chinese");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
-        BorderPane functionPane = null;
-        try {
-			functionPane = (BorderPane)loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        FunctionController functionController = loader.getController();
-        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_CN"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button_CN"));
-        functionController.getBack_button().setText(p.getProperty("back_button_CN"));
-        functionController.setHomePage(hp);
-        functionController.setLanguage("Chinese");
-        hp.getRootLayout().setCenter(functionPane);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_CN"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title_CN"));
+	@FXML
+	public void backToChooseFunction() throws Exception {
+		updateFunction();
 	}
 	
-	public void reloadFunctionEnglishVersion() {
-		hp.setLanguage("English");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
-        BorderPane functionPane = null;
-        try {
-			functionPane = (BorderPane)loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        FunctionController functionController = loader.getController();
-        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label_US"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button_US"));
-        functionController.getBack_button().setText(p.getProperty("back_button_US"));
-        functionController.setHomePage(hp);
-        functionController.setLanguage("English");
-        hp.getRootLayout().setCenter(functionPane);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS_US"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title_US"));
+	public void reloadFunctionChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateFunction();
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	
+	public void reloadFunctionEnglishVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateFunction();
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
 
 	@FXML
@@ -319,23 +253,23 @@ public class MovieController {
 			MediaControl mediaControl = new MediaControl(mp);
 			hp.getRootLayout().setCenter(mediaControl);
 			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-	            reloadMediaChineseVersion();
+	            try {
+					reloadMediaChineseVersion();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 	        });
 	        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-	            reloadMediaEnglishVersion();
+	            try {
+					reloadMediaEnglishVersion();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 	        });
 	        mediaControl.setHomePage(hp);
-	        mediaControl.setLanguage(language);
-	        if(language.equals("Chinese")) {
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_CN") + " " + movieName);
-	        }
-	        else if(language.equals("English")) {
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_US"));
-	        	mediaControl.getBack_button().setText(p.getProperty("back_button_CN"));
-	        	hp.getStage().setTitle(p.getProperty("mediaStage_title_US") + " " + movieName);
-	        }
+	        mediaControl.setProperties(p);
+        	mediaControl.getBack_button().setText(p.getProperty("back_button"));
+        	hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
 		}
 	}
 }

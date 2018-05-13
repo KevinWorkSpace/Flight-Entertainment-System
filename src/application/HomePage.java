@@ -19,13 +19,9 @@ import javafx.stage.Stage;
 
 public class HomePage extends Application {
 	
-	private Statement stmt;
-	
 	private Properties p;
 	
 	private Stage stage;
-	
-	private String language;
 	
 	private BorderPane rootLayout;
 	
@@ -87,14 +83,6 @@ public class HomePage extends Application {
 		seenMovie = isSeen;
 	}
 	
-	public String getLanguage() {
-		return language;
-	}
-	
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-	
 	public RootLayoutController getRootLayoutController() {
 		return rootLayoutController;
 	}
@@ -103,10 +91,6 @@ public class HomePage extends Application {
 		return rootLayout;
 	}
 		
-	public Statement getStatement() {
-		return stmt;
-	}
-	
 	public Properties getProperties() {
 		return p;
 	}
@@ -117,21 +101,20 @@ public class HomePage extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException, SQLException {
-		InputStream in = new BufferedInputStream(new FileInputStream("test.properties")); 
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
         p.load(in);
         File file= new File(this.getCssPath());
 		String[] filelist = file.list();
 		cssURL = "file:///" + this.getCssPath() + "/" + filelist[0];
         seenMovie = false;
-		language = "Chinese";
 		stage = primaryStage;
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("RootLayout.fxml"));
         rootLayout = (BorderPane) loader.load();
         rootLayoutController = loader.getController();
         rootLayoutController.setHomePage(this);
-        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_CN"));
+        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS"));
         Scene scene = new Scene(rootLayout);
         scene.getStylesheets().add(cssURL);
         stage.setScene(scene);
@@ -140,13 +123,20 @@ public class HomePage extends Application {
         BorderPane root = (BorderPane) loader2.load();
         welcomeController = loader2.getController();
         welcomeController.setHomePage(this);
+        welcomeController.setProperties(p);
+        welcomeController.getEnter_button().setText(p.getProperty("enter_button"));
+        welcomeController.getWelcome_label().setText(p.getProperty("welcome_label"));
         rootLayoutController.getChineseVersion().setOnAction((ActionEvent t) -> {
-            reloadChineseVersion();
+            try {
+				reloadChineseVersion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         });
         rootLayoutController.getEnglishVersion().setOnAction((ActionEvent t) -> {
             try {
 				reloadEnglishVersion();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
@@ -162,7 +152,7 @@ public class HomePage extends Application {
         	changeCSS(rootLayoutController.getV3().getText(), scene);
         });
         
-        primaryStage.setTitle("Welcome");
+        primaryStage.setTitle(p.getProperty("welcomeStage_title"));
         primaryStage.show();
 	}
 	
@@ -180,41 +170,33 @@ public class HomePage extends Application {
 		scene.getStylesheets().add(cssURL);
 	}
 	
-	private void reloadEnglishVersion() throws IOException {
-		this.setLanguage("English");
-        FXMLLoader loader = new FXMLLoader();
+	public void update() throws Exception {
+		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Welcome.fxml"));
         BorderPane root = (BorderPane)loader.load();
         welcomeController = loader.getController();
-        welcomeController.getEnter_button().setText(p.getProperty("enter_button_US"));
-        welcomeController.getWelcome_label().setText(p.getProperty("welcome_label_US"));
+        welcomeController.setProperties(p);
+        welcomeController.getEnter_button().setText(p.getProperty("enter_button"));
+        welcomeController.getWelcome_label().setText(p.getProperty("welcome_label"));
         welcomeController.setHomePage(this);
-        welcomeController.setLanguage("English");
         rootLayout.setCenter(root);
-        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_US"));
-        rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_CN"));
-        this.getStage().setTitle(p.getProperty("welcomeStage_title_US"));
+        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS"));
+        rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        this.getStage().setTitle(p.getProperty("welcomeStage_title"));
+	}
+	
+	private void reloadEnglishVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        update();
 	}
 
-	private void reloadChineseVersion() {
-		this.setLanguage("Chinese");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("Welcome.fxml"));
-        BorderPane root = null;
-        try {
-			root = (BorderPane)loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        welcomeController = loader.getController();
-        welcomeController.getEnter_button().setText(p.getProperty("enter_button_CN"));
-        welcomeController.getWelcome_label().setText(p.getProperty("welcome_label_CN"));
-        welcomeController.setHomePage(this);
-        welcomeController.setLanguage("Chinese");
-        rootLayout.setCenter(root);
-        rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS_CN"));
-        rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage_US"));
-        this.getStage().setTitle(p.getProperty("welcomeStage_title_CN"));
+	private void reloadChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        update();
 	}
 
 	public static void main(String[] args) {

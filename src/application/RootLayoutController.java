@@ -1,6 +1,11 @@
 package application;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,16 +73,10 @@ public class RootLayoutController {
 	@FXML
 	private void initialize() {
 		menuBar.getMenus().clear();
-		menuLanguage = new Menu("Language");
+		menuLanguage = new Menu("语言");
 		menuBar.getMenus().add(menuLanguage);
 		englishVersion = new MenuItem("English");
-		englishVersion.setOnAction((ActionEvent t) -> {
-            hp.setLanguage("English");
-        });        
 		chineseVersion = new MenuItem("中文");
-		chineseVersion.setOnAction((ActionEvent t) -> {
-            hp.setLanguage("Chinese");
-        });
 		menuLanguage.getItems().add(englishVersion);
 		menuLanguage.getItems().add(chineseVersion);
 		menuCSS = new Menu("Style");
