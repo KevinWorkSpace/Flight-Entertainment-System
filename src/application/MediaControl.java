@@ -95,6 +95,17 @@ public class MediaControl extends BorderPane {
                 }
             }
         });
+        back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+            	if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            }
+        });
         mediaBar.getChildren().add(back_button);
  
         final Button playButton  = new Button(">");
@@ -124,6 +135,17 @@ public class MediaControl extends BorderPane {
                            mp.pause();
                          }
                 }
+            }
+        });
+        playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+            	if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
             }
         });
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -214,6 +236,17 @@ public class MediaControl extends BorderPane {
                }
             }
         });
+        timeSlider.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+            	if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            }
+        });
         mediaBar.getChildren().add(timeSlider);
         
         // Add Play label
@@ -231,6 +264,17 @@ public class MediaControl extends BorderPane {
         volumeSlider.setPrefWidth(70);
         volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
         volumeSlider.setMinWidth(30);
+        volumeSlider.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+            	if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            }
+        });
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
             public void invalidated(Observable ov) {
                if (volumeSlider.isValueChanging()) {
@@ -301,7 +345,7 @@ public class MediaControl extends BorderPane {
 	}
 
 
-protected void updateValues() {
+	protected void updateValues() {
 	  if (playTime != null && timeSlider != null && volumeSlider != null) {
 	     Platform.runLater(new Runnable() {
 	        public void run() {
@@ -323,7 +367,7 @@ protected void updateValues() {
 	  }
 	}
 
-private static String formatTime(Duration elapsed, Duration duration) {
+	private static String formatTime(Duration elapsed, Duration duration) {
 	   int intElapsed = (int)Math.floor(elapsed.toSeconds());
 	   int elapsedHours = intElapsed / (60 * 60);
 	   if (elapsedHours > 0) {
@@ -360,4 +404,5 @@ private static String formatTime(Duration elapsed, Duration duration) {
 	                    elapsedSeconds);
 	            }
 	        }
-	    }}
+	    }
+	}
