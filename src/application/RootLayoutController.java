@@ -87,7 +87,8 @@ public class RootLayoutController {
 		menuCSS.getItems().add(v1);
 		menuCSS.getItems().add(v2);
 		menuCSS.getItems().add(v3);
-		File file= new File("F:\\Science\\Ajava2\\Project\\CSS");
+		HomePage hp = new HomePage();
+		File file= new File(hp.getCssPath());
 		String[] filelist = file.list();
 		for(int i=0; i<3; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));

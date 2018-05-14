@@ -146,7 +146,8 @@ public class MovieController {
 	@FXML
 	private void initialize() throws Exception {
 		ObservableList<String> items =FXCollections.observableArrayList();
-		File file= new File("F:/Science/Ajava2/Project/Movies");
+		HomePage hp = new HomePage();
+		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
