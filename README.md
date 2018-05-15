@@ -9,4 +9,4 @@
 
     HomePage类, 修改cssPath变量的默认值
     
-三. 实现了电影分类, 所以需要在Movies文件夹下再建四个文件夹: Funny, Fiction, Cartoon, Romance 
+三. 实现了电影分类, 所以需要在Movies文件夹下再建四个文件夹: Funny, Fiction, Cartoon, Romance 并把原来放在Movies文件夹中的电影分类放入这些文件夹下
