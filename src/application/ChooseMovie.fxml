@@ -9,7 +9,7 @@
    <bottom>
       <VBox prefHeight="18.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="back_button" mnemonicParsing="false" onAction="#backToChooseFunction" text="返回" />
+            <Button fx:id="back_button" mnemonicParsing="false" onAction="#backToChooseType" text="返回" />
          </children>
       </VBox>
    </bottom>

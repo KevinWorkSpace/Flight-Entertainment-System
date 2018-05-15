@@ -88,13 +88,13 @@ public class MovieController {
 	public void updateMedia() {
 		if(mp != null)
 			mp.pause();
-		File file= new File(hp.getFilePath());
+		File file= new File(hp.getMoviePath());
 		String[] filelist = file.list();
 		String MEDIA_URL = null;
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
+				MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i];
 				break;
 			}
 		}
@@ -147,7 +147,7 @@ public class MovieController {
 	private void initialize() throws Exception {
 		ObservableList<String> items =FXCollections.observableArrayList();
 		HomePage hp = new HomePage();
-		File file= new File(hp.getFilePath());
+		File file= new File(hp.getMoviePath());
 		String[] filelist = file.list();
 		for(int i=0; i<filelist.length; i++) {
 			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
@@ -159,7 +159,7 @@ public class MovieController {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
 					try {
-						backToChooseFunction();
+						backToChooseType();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -180,28 +180,34 @@ public class MovieController {
         });
 	}
 	
-	public void updateFunction() throws Exception {
+	public void backToChooseType() throws Exception {
+		updateType();
+	}
+	
+	public void updateType() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
+        loader.setLocation(getClass().getResource("ChooseType.fxml"));
         BorderPane root = (BorderPane)loader.load();
-        FunctionController functionController = loader.getController();
-        functionController.setProperties(p);
-    	functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
-    	functionController.getBack_button().setText(p.getProperty("back_button"));
-    	functionController.getMovie_button().setText(p.getProperty("movie_button"));
-    	hp.getStage().setTitle(p.getProperty("functionStage_title"));
-        functionController.setHomePage(hp);
-      //改变语言, 重新加载界面
+        TypeController typeController = loader.getController();
+        typeController.setProperties(p);
+        typeController.setHomePage(hp);
+        typeController.getBack_button().setText(p.getProperty("back_button"));
+        typeController.getCartoon_button().setText(p.getProperty("cartoon_button"));
+        typeController.getFiction_button().setText(p.getProperty("fiction_button"));
+        typeController.getFunny_button().setText(p.getProperty("funny_button"));
+        typeController.getRomance_button().setText(p.getProperty("romance_button"));
+        typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
+        hp.getStage().setTitle(p.getProperty("typeStage_title"));
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadFunctionChineseVersion();
+				reloadTypeChineseVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadFunctionEnglishVersion();
+				reloadTypeEnglishVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -209,27 +215,22 @@ public class MovieController {
         hp.getRootLayout().setCenter(root);
 	}
 	
-	@FXML
-	public void backToChooseFunction() throws Exception {
-		updateFunction();
+	public void reloadTypeChineseVersion() throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType();
+		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
 	
-	public void reloadFunctionChineseVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        updateFunction();
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-	
-	public void reloadFunctionEnglishVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        updateFunction();
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	public void reloadTypeEnglishVersion() throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType();
+		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
 
 	@FXML

@@ -39,6 +39,8 @@ public class HomePage extends Application {
 	
 	private String filePath = "F:/Science/Ajava2/Project/Movies";
 	
+	private static String moviePath;
+	
 	private String cssPath = "F:/Science/Ajava2/Project/CSS";
 	
 	public String getCssPath() {
@@ -47,6 +49,18 @@ public class HomePage extends Application {
 	
 	public String getFilePath() {
 		return filePath;
+	}
+	
+	public void setFilePath(String filePat) {
+		filePath = filePat;
+	}
+	
+	public void setMoviePath(String moviePat) {
+		moviePath = moviePat;
+	}
+	
+	public String getMoviePath() {
+		return moviePath;
 	}
 	
 	public String getVname() {
