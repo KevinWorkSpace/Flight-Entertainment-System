@@ -39,9 +39,9 @@ public class HomePage extends Application {
 	
 	private String filePath = "F:/Science/Ajava2/Project/Movies";
 	
-	private static String moviePath;
-	
 	private String cssPath = "F:/Science/Ajava2/Project/CSS";
+	
+	private static String moviePath;
 	
 	public String getCssPath() {
 		return cssPath;

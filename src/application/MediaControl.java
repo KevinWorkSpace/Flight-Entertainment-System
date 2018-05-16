@@ -56,6 +56,10 @@ public class MediaControl extends BorderPane {
     public Button getBack_button() {
     	return back_button;
     }
+    
+    public MediaView getMediaView() {
+    	return mediaView;
+    }
  
     public MediaControl(final MediaPlayer mp) {
         this.mp = mp;
@@ -295,6 +299,8 @@ public class MediaControl extends BorderPane {
         movieController.setProperties(p);
     	movieController.getBack_button().setText(p.getProperty("back_button"));
     	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label"));
+    	movieController.getPlay_button().setText(p.getProperty("play_button"));
+    	movieController.getMovieInfo_label().setText("");
     	if(!hp.haveSeenMovie()) {
     		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button"));
     	}

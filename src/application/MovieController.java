@@ -3,20 +3,15 @@ package application;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -36,36 +31,50 @@ public class MovieController {
 	
 	private String movieName;
 	
-	public void setProperties(Properties p) {
-		this.p = p;
-	}
-	
 	@FXML
 	private Button back_button;
 	
-	public Button getBack_button() {
-		return back_button;
-	}
-
 	@FXML
 	private ListView<String> movielist;
 	
-	public void setHomePage(HomePage hp) {
-		this.hp = hp;
-	}
-	
 	@FXML
 	private Label movieChoose_label;
-	
-	public Label getMovieChoose_label() {
-		return movieChoose_label;
-	}
 	
 	@FXML
 	private Label seenBefore_label;
 	
 	@FXML
 	private Button lastMovie_button;
+	
+	@FXML
+	private Label movieInfo_label;
+	
+	@FXML
+	private Button play_button;
+	
+	public Label getMovieInfo_label() {
+		return movieInfo_label;
+	}
+	
+	public Button getPlay_button() {
+		return play_button;
+	}
+	
+	public Button getBack_button() {
+		return back_button;
+	}
+	
+	public void setProperties(Properties p) {
+		this.p = p;
+	}
+	
+	public void setHomePage(HomePage hp) {
+		this.hp = hp;
+	}
+	
+	public Label getMovieChoose_label() {
+		return movieChoose_label;
+	}
 	
 	public Label getSeenBefore_label() {
 		return seenBefore_label;
@@ -77,6 +86,13 @@ public class MovieController {
 	
 	@FXML
 	public void selectMovie() throws Exception {
+		if(movielist.getSelectionModel().getSelectedItem() != null) {
+			movieName = movielist.getSelectionModel().getSelectedItem();
+		}
+	}
+	
+	@FXML
+	public void playMovie() {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			hp.setSeenMovie(true);
 			movieName = movielist.getSelectionModel().getSelectedItem();

@@ -20,10 +20,12 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ListView fx:id="movielist" onMouseReleased="#selectMovie" prefHeight="362.0" prefWidth="418.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="362.0" prefWidth="221.0" spacing="30.0">
+            <VBox alignment="TOP_CENTER" prefHeight="362.0" prefWidth="221.0" spacing="20.0">
                <children>
                   <Label fx:id="seenBefore_label" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="221.0" text="刚刚看到" />
                   <Button fx:id="lastMovie_button" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#continueWatching" prefHeight="23.0" prefWidth="182.0" text="您还没有看过任何电影" />
+                  <Label fx:id="movieInfo_label" prefHeight="262.0" prefWidth="186.0" />
+                  <Button fx:id="play_button" mnemonicParsing="false" onAction="#playMovie" text="播放" />
                </children>
             </VBox>
          </children>

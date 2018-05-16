@@ -97,6 +97,8 @@ public class TypeController {
         movieController.setProperties(p);
     	movieController.getBack_button().setText(p.getProperty("back_button"));
     	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label"));
+    	movieController.getPlay_button().setText(p.getProperty("play_button"));
+    	movieController.getMovieInfo_label().setText("");
     	//如果还没有看过电影
     	if(!hp.haveSeenMovie()) {
     		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label"));
