@@ -1,17 +1,19 @@
 package application;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class TypeController {
@@ -27,10 +29,18 @@ public class TypeController {
 	private Button cartoon_button;
 	@FXML
 	private Button back_button;
+	@FXML
+	private TextField search_text;
+	@FXML
+	private Button search_button;
 	
 	private HomePage hp;
 	
 	private Properties p;
+	
+	public Button getSearch_button() {
+		return search_button;
+	}
 	
 	public Label getChooseType_label() {
 		return chooseType_label;
@@ -86,6 +96,37 @@ public class TypeController {
 	public void enterCartoonMovieList() throws Exception {
 		hp.setMoviePath(hp.getFilePath() + "/CartoonMovies");
 		updateMovie();
+	}
+	
+	@FXML
+	public void search() throws Exception {
+		HomePage hp = new HomePage();
+		File file= new File(hp.getFilePath());
+		String[] filelist = file.list();
+		String movieType = null;
+		String movieName = null;
+		boolean flag = false;
+		for(int i=0; i<filelist.length; i++) {
+			File f = new File(hp.getFilePath() + "/" + filelist[i]);
+			String[] inFilelist = f.list();
+			int j=0;
+			for(j=0; j<inFilelist.length; j++) {
+				String name = inFilelist[j].substring(0,inFilelist[j].lastIndexOf("."));
+				if(search_text.getText().equals(name)) {
+					flag = true;
+					movieType = filelist[i];
+					movieName = inFilelist[j];
+					break;
+				}
+			}
+			if(j != inFilelist.length) {
+				break;
+			}
+		}
+		if(flag) {
+			this.hp.setMoviePath(hp.getFilePath() + "/" + movieType + "/" + movieName);
+			updateMovie();
+		}
 	}
 	
 	public void updateMovie() throws Exception {

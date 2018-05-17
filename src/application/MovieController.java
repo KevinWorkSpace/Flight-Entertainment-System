@@ -105,14 +105,19 @@ public class MovieController {
 		if(mp != null)
 			mp.pause();
 		File file= new File(hp.getMoviePath());
-		String[] filelist = file.list();
 		String MEDIA_URL = null;
-		for(int i=0; i<filelist.length; i++) {
-			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i];
-				break;
+		if(file.isDirectory()) {
+			String[] filelist = file.list();
+			for(int i=0; i<filelist.length; i++) {
+				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+				if(name.equals(movieName)) {
+					MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i];
+					break;
+				}
 			}
+		}
+		else {
+			MEDIA_URL = "file:///" + hp.getMoviePath();
 		}
 		Media media = new Media(MEDIA_URL);
 		mp = new MediaPlayer(media);
@@ -164,12 +169,19 @@ public class MovieController {
 		ObservableList<String> items =FXCollections.observableArrayList();
 		HomePage hp = new HomePage();
 		File file= new File(hp.getMoviePath());
-		String[] filelist = file.list();
-		for(int i=0; i<filelist.length; i++) {
-			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+		if(file.isDirectory()) {
+			String[] filelist = file.list();
+			for(int i=0; i<filelist.length; i++) {
+				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
+				items.add(name);
+			}
+		}
+		else {
+			String name = file.getName().substring(0,file.getName().lastIndexOf("."));
 			items.add(name);
 		}
 		movielist.setItems(items);
+		
 		back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -213,6 +225,7 @@ public class MovieController {
         typeController.getFunny_button().setText(p.getProperty("funny_button"));
         typeController.getRomance_button().setText(p.getProperty("romance_button"));
         typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
+        typeController.getSearch_button().setText(p.getProperty("search_button"));
         hp.getStage().setTitle(p.getProperty("typeStage_title"));
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
@@ -254,30 +267,44 @@ public class MovieController {
 		movieName = hp.getLastMovieName();
 		hp.setLastMovieName(movieName);
 		hp.setSeenMovie(true);
+		HomePage hp = new HomePage();
 		File file= new File(hp.getFilePath());
 		String[] filelist = file.list();
-		String MEDIA_URL = null;
+		String movieType = null;
+		String movieName = null;
+		boolean flag = false;
 		for(int i=0; i<filelist.length; i++) {
-			String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
-			if(name.equals(movieName)) {
-				MEDIA_URL = "file:///" + hp.getFilePath() + "/" + filelist[i];
+			File f = new File(hp.getFilePath() + "/" + filelist[i]);
+			String[] inFilelist = f.list();
+			int j=0;
+			for(j=0; j<inFilelist.length; j++) {
+				String name = inFilelist[j].substring(0,inFilelist[j].lastIndexOf("."));
+				if(this.movieName.equals(name)) {
+					flag = true;
+					movieType = filelist[i];
+					movieName = inFilelist[j];
+					break;
+				}
+			}
+			if(j != inFilelist.length) {
 				break;
 			}
 		}
+		String MEDIA_URL = "file:///" + hp.getFilePath() + "/" + movieType + "/" + movieName;
 		if(MEDIA_URL != null) {
 			Media media = new Media(MEDIA_URL);
 			mp = new MediaPlayer(media);
 			mp.setAutoPlay(true);
 			MediaControl mediaControl = new MediaControl(mp);
-			hp.getRootLayout().setCenter(mediaControl);
-			hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+			this.hp.getRootLayout().setCenter(mediaControl);
+			this.hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
 	            try {
 					reloadMediaChineseVersion();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 	        });
-	        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+	        this.hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
 	            try {
 					reloadMediaEnglishVersion();
 				} catch (Exception e) {
@@ -287,7 +314,7 @@ public class MovieController {
 	        mediaControl.setHomePage(hp);
 	        mediaControl.setProperties(p);
         	mediaControl.getBack_button().setText(p.getProperty("back_button"));
-        	hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
+        	this.hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
 		}
 	}
 }

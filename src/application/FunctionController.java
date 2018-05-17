@@ -132,6 +132,7 @@ public class FunctionController {
         typeController.getFunny_button().setText(p.getProperty("funny_button"));
         typeController.getRomance_button().setText(p.getProperty("romance_button"));
         typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
+        typeController.getSearch_button().setText(p.getProperty("search_button"));
         hp.getStage().setTitle(p.getProperty("typeStage_title"));
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
