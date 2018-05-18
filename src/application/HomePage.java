@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -42,6 +44,12 @@ public class HomePage extends Application {
 	private String cssPath = "F:/Science/Ajava2/Project/CSS";
 	
 	private static String moviePath;
+	
+	private Statement stmt;
+	
+	public Statement getStatement() {
+		return stmt;
+	}
 	
 	public String getCssPath() {
 		return cssPath;
@@ -115,6 +123,21 @@ public class HomePage extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException, SQLException {
+		Connection conn = null;
+        String url = "jdbc:mysql://localhost:3306/crashcourse?"
+                + "user=root&password=Zhchming1&useUnicode=true&characterEncoding=UTF8";
+ 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("成功加载MySQL驱动程序");
+            conn = DriverManager.getConnection(url);
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+        	System.out.println("MySQL操作错误");
+        	e.printStackTrace();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
         p.load(in);
@@ -155,7 +178,6 @@ public class HomePage extends Application {
 			}
         });
         rootLayout.setCenter(root);
-        
         rootLayoutController.getV1().setOnAction((ActionEvent t) -> {
         	changeCSS(rootLayoutController.getV1().getText(), scene);
         });

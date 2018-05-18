@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Properties;
 
 import javafx.collections.FXCollections;
@@ -52,6 +54,13 @@ public class MovieController {
 	@FXML
 	private Button play_button;
 	
+	@FXML
+	private Label info_label;
+	
+	public Label getInfo_label() {
+		return info_label;
+	}
+	
 	public Label getMovieInfo_label() {
 		return movieInfo_label;
 	}
@@ -88,6 +97,23 @@ public class MovieController {
 	public void selectMovie() throws Exception {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			movieName = movielist.getSelectionModel().getSelectedItem();
+			Statement stmt = hp.getStatement();
+			String sql = "select * from movie where name = " + "'" + movieName + "'"; 
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.getFetchSize() == 0) {
+				this.movieInfo_label.setText(p.getProperty("noInfo_msg"));
+			}
+			else {
+				StringBuffer text = new StringBuffer("");
+				while (rs.next()){
+					text.append(rs.getString(2) + "\n");
+		            text.append(rs.getString(3) + "\n");
+		            text.append(rs.getString(4) + "\n");
+		            text.append(rs.getString(5) + "\n");
+		            text.append(rs.getString(6) + "\n");
+		        }
+				this.movieInfo_label.setText(text.toString());
+			}
 		}
 	}
 	
