@@ -98,12 +98,14 @@ public class MovieController {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			movieName = movielist.getSelectionModel().getSelectedItem();
 			Statement stmt = hp.getStatement();
-			String sql = "select * from movie where name = " + "'" + movieName + "'"; 
+			String sql = "select * from movie where name = " + "'" + movieName + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			if(rs.getFetchSize() == 0) {
+			if(!rs.last()) {
 				this.movieInfo_label.setText(p.getProperty("noInfo_msg"));
+				rs.beforeFirst(); 
 			}
 			else {
+				rs.beforeFirst();
 				StringBuffer text = new StringBuffer("");
 				while (rs.next()){
 					text.append(rs.getString(2) + "\n");
@@ -137,7 +139,7 @@ public class MovieController {
 			for(int i=0; i<filelist.length; i++) {
 				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 				if(name.equals(movieName)) {
-					MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i];
+					MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i].replaceAll(" ","%20");;
 					break;
 				}
 			}
