@@ -98,7 +98,7 @@ public class MovieController {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
 			movieName = movielist.getSelectionModel().getSelectedItem();
 			Statement stmt = hp.getStatement();
-			String sql = "select * from movie where name = " + "'" + movieName + "'";
+			String sql = "select * from movies where name = " + "'" + movieName + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			if(!rs.last()) {
 				this.movieInfo_label.setText(p.getProperty("noInfo_msg"));
@@ -109,10 +109,116 @@ public class MovieController {
 				StringBuffer text = new StringBuffer("");
 				while (rs.next()){
 					text.append(rs.getString(2) + "\n");
-		            text.append(rs.getString(3) + "\n");
-		            text.append(rs.getString(4) + "\n");
-		            text.append(rs.getString(5) + "\n");
-		            text.append(rs.getString(6) + "\n");
+					String info = rs.getString(3);
+					int[] a = new int[7];
+					int count = 0;
+					while(count < 7) {
+						for(int i=0; i<info.length()-1; i++) {
+							String sb = "";
+							for(int j=0; j<2; j++) {
+								sb = sb + info.charAt(i+j);
+							}
+							if(sb.equals("编剧") && count <= 0) {
+								a[0] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("主演") && count <= 1) {
+								a[1] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("类型") && count <= 2) {
+								a[2] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("制片") && count <= 3) {
+								a[3] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("语言") && count <= 4) {
+								a[4] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("上映") && count <= 5) {
+								a[5] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+							else if(sb.equals("片长") && count <= 6) {
+								a[6] = i;
+								String front = "";
+								String back = "";
+								for(int j=0; j<i-1; j++) {
+									front = front + info.charAt(j);
+								}
+								for(int j=i; j<info.length(); j++) {
+									back = back + info.charAt(j);
+								}
+								info = front + "\n" + back;
+								count++;
+								break;
+							}
+						}
+					}
+					text.append(info);
 		        }
 				this.movieInfo_label.setText(text.toString());
 			}
