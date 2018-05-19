@@ -97,12 +97,7 @@ public class MediaControl extends BorderPane {
 						e.printStackTrace();
 					}
                 }
-            }
-        });
-        back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-            	if(event.getCode() == KeyCode.ADD) {
+                if(event.getCode() == KeyCode.ADD) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
             	}
             	if(event.getCode() == KeyCode.SUBTRACT) {
@@ -139,17 +134,6 @@ public class MediaControl extends BorderPane {
                            mp.pause();
                          }
                 }
-            }
-        });
-        playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-            	if(event.getCode() == KeyCode.ADD) {
-            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
-            	}
-            	if(event.getCode() == KeyCode.SUBTRACT) {
-            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
-            	}
             }
         });
         playButton.setOnAction(new EventHandler<ActionEvent>() {

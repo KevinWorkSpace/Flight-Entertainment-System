@@ -340,6 +340,18 @@ public class MovieController {
                 }
             }
         });
+		play_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						playMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
 	}
 	
 	public void backToChooseType() throws Exception {

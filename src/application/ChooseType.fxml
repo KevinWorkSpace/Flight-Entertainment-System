@@ -14,16 +14,16 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="600.0" spacing="40.0">
+            <Button fx:id="funny_button" mnemonicParsing="false" onAction="#enterFunnyMovieList" prefHeight="23.0" prefWidth="125.0" text="搞笑喜剧" />
+            <Button fx:id="fiction_button" mnemonicParsing="false" onAction="#enterFictionMovieList" prefHeight="23.0" prefWidth="125.0" text="科幻悬疑" />
+            <Button fx:id="romance_button" mnemonicParsing="false" onAction="#enterRomanceMovieList" prefHeight="23.0" prefWidth="125.0" text="浪漫爱情" />
+            <Button fx:id="cartoon_button" mnemonicParsing="false" onAction="#enterCartoonMovieList" prefHeight="23.0" prefWidth="125.0" text="儿童动画" />
+            <HBox alignment="CENTER" prefHeight="20.0" prefWidth="600.0" spacing="40.0">
                <children>
                   <TextField fx:id="search_text" />
                   <Button fx:id="search_button" mnemonicParsing="false" onAction="#search" text="搜索" />
                </children>
             </HBox>
-            <Button fx:id="funny_button" mnemonicParsing="false" onAction="#enterFunnyMovieList" text="搞笑喜剧" />
-            <Button fx:id="fiction_button" mnemonicParsing="false" onAction="#enterFictionMovieList" text="科幻悬疑" />
-            <Button fx:id="romance_button" mnemonicParsing="false" onAction="#enterRomanceMovieList" text="浪漫爱情" />
-            <Button fx:id="cartoon_button" mnemonicParsing="false" onAction="#enterCartoonMovieList" text="儿童动画" />
          </children>
       </VBox>
    </center>

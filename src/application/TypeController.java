@@ -9,11 +9,14 @@ import java.util.Properties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 public class TypeController {
@@ -237,6 +240,58 @@ public class TypeController {
         updateMovie();
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	
+	@FXML
+	private void initialize() {
+		funny_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						enterFunnyMovieList();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.fiction_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						enterFictionMovieList();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.romance_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						enterRomanceMovieList();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.cartoon_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						enterCartoonMovieList();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
 	}
 	
 }
