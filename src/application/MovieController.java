@@ -245,7 +245,7 @@ public class MovieController {
 			for(int i=0; i<filelist.length; i++) {
 				String name = filelist[i].substring(0,filelist[i].lastIndexOf("."));
 				if(name.equals(movieName)) {
-					MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i].replaceAll(" ","%20");;
+					MEDIA_URL = "file:///" + hp.getMoviePath() + "/" + filelist[i].replaceAll(" ","%20");
 					break;
 				}
 			}
@@ -424,7 +424,7 @@ public class MovieController {
 				break;
 			}
 		}
-		String MEDIA_URL = "file:///" + hp.getFilePath() + "/" + movieType + "/" + movieName;
+		String MEDIA_URL = "file:///" + hp.getFilePath() + "/" + movieType + "/" + movieName.replaceAll(" ","%20");;
 		if(MEDIA_URL != null) {
 			Media media = new Media(MEDIA_URL);
 			mp = new MediaPlayer(media);
