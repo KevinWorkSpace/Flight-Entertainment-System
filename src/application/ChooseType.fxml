@@ -30,7 +30,7 @@
    <bottom>
       <HBox prefHeight="17.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="back_button" mnemonicParsing="false" onAction="#backToChooseFunction" text="返回" />
+            <Button fx:id="back_button" mnemonicParsing="false" onAction="#backToWelcome" text="返回" />
          </children>
       </HBox>
    </bottom>

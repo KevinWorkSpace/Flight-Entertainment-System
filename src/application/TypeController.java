@@ -22,85 +22,141 @@ import javafx.scene.layout.BorderPane;
 public class TypeController {
 	@FXML
 	private Label chooseType_label;
+	
 	@FXML
 	private Button funny_button;
+	
 	@FXML
 	private Button fiction_button;
+	
 	@FXML
 	private Button romance_button;
+	
 	@FXML
 	private Button cartoon_button;
+	
 	@FXML
 	private Button back_button;
+	
 	@FXML
 	private TextField search_text;
+	
 	@FXML
 	private Button search_button;
 	
 	private HomePage hp;
 	
 	private Properties p;
-	
+	/**
+	 * <b>得到search按钮</b>
+	 * @return search按钮的对象
+	 */
 	public Button getSearch_button() {
 		return search_button;
 	}
-	
+	/**
+	 * <b>得到选择电影类型的标题</b>
+	 * @return 标题的对象
+	 */
 	public Label getChooseType_label() {
 		return chooseType_label;
 	}
-
+	/**
+	 * <b>得到funny按钮</b>
+	 * @return 按钮的对象
+	 */
 	public Button getFunny_button() {
 		return funny_button;
 	}
-
+	/**
+	 * <b>得到fiction按钮</b>
+	 * @return 按钮的对象
+	 */ 
 	public Button getFiction_button() {
 		return fiction_button;
 	}
-
+	/**
+	 * <b>得到romance按钮</b>
+	 * @return 按钮的对象
+	 */
 	public Button getRomance_button() {
 		return romance_button;
 	}
-
+	/**
+	 * <b>得到cartoon按钮</b>
+	 * @return 按钮的对象
+	 */
 	public Button getCartoon_button() {
 		return cartoon_button;
 	}
-
+	/**
+	 * <b>得到back按钮</b>
+	 * @return 按钮的对象
+	 */
 	public Button getBack_button() {
 		return back_button;
 	}
-
+	/**
+	 * <b>设置主页</b>
+	 * @param hp 主页的对象
+	 */
 	public void setHomePage(HomePage hp) {
 		this.hp = hp;
 	}
-	
+	/**
+	 * <b>设置Properties文件</b>
+	 * @param p
+	 */
 	public void setProperties(Properties p) {
 		this.p = p;
 	}
-	
+	/**
+	 * <b>进入funny类型的电影列表</b>
+	 * @throws Exception
+	 */
 	@FXML
 	public void enterFunnyMovieList() throws Exception {
 		hp.setMoviePath(hp.getFilePath() + "/FunnyMovies");
 		updateMovie();
 	}
-	
+	/**
+	 * <b>进入fiction类型的电影列表</b>
+	 * @throws Exception
+	 */
 	@FXML
 	public void enterFictionMovieList() throws Exception {
 		hp.setMoviePath(hp.getFilePath() + "/FictionMovies");
 		updateMovie();
 	}
-	
+	/**
+	 * <b>进入romance类型的电影列表</b>
+	 * @throws Exception
+	 */
 	@FXML
 	public void enterRomanceMovieList() throws Exception {
 		hp.setMoviePath(hp.getFilePath() + "/RomanceMovies");
 		updateMovie();
 	}
-
+	/**
+	 * <b>进入cartoon类型的电影列表</b>
+	 * @throws Exception
+	 */
 	@FXML
 	public void enterCartoonMovieList() throws Exception {
 		hp.setMoviePath(hp.getFilePath() + "/CartoonMovies");
 		updateMovie();
 	}
-	
+	/**
+	 * <b>在Movies文件夹中搜索电影</b>
+	 * <p>
+	 * 首先对Movies文件夹中的四个不同电影类型的文件夹的遍历<br>
+	 * 找到与搜索框中输入的电影名字一样的电影, 并跳转到电影列表界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateMovie()}方法
+	 * </ol>
+	 * @throws Exception
+	 */
 	@FXML
 	public void search() throws Exception {
 		HomePage hp = new HomePage();
@@ -131,7 +187,10 @@ public class TypeController {
 			updateMovie();
 		}
 	}
-	
+	/**
+	 * <b>重载电影列表界面</b>
+	 * @throws Exception
+	 */
 	public void updateMovie() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
@@ -170,60 +229,72 @@ public class TypeController {
         });
         hp.getRootLayout().setCenter(moviePane);
 	}
-	
-	public void updateFunction() throws Exception {
+	/**
+	 * <b>重载Welcome界面</b>
+	 * @throws Exception
+	 */
+	public void updateWelcome() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
+        loader.setLocation(getClass().getResource("Welcome.fxml"));
         BorderPane root = (BorderPane)loader.load();
-        FunctionController functionController = loader.getController();
-        functionController.setProperties(p);
-    	functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
-    	functionController.getBack_button().setText(p.getProperty("back_button"));
-    	functionController.getMovie_button().setText(p.getProperty("movie_button"));
-    	hp.getStage().setTitle(p.getProperty("functionStage_title"));
-        functionController.setHomePage(hp);
-      //改变语言, 重新加载界面
+        WelcomeController welcomeController = loader.getController();
+        welcomeController.setProperties(p);
+    	welcomeController.getEnter_button().setText(p.getProperty("enter_button"));
+    	welcomeController.getWelcome_label().setText(p.getProperty("welcome_label"));
+    	hp.getStage().setTitle(p.getProperty("welcomeStage_title"));
+        hp.getRootLayout().setCenter(root);
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadFunctionChineseVersion();
+				reloadWelcomeChineseVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadFunctionEnglishVersion();
+				reloadWelcomeEnglishVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
-        hp.getRootLayout().setCenter(root);
+        welcomeController.setHomePage(hp);
 	}
-	
+	/**
+	 * <b>返回Welcome界面</b>
+	 * @throws Exception
+	 */
 	@FXML
-	public void backToChooseFunction() throws Exception {
-		updateFunction();
+	public void backToWelcome() throws Exception {
+		updateWelcome();
 	}
-	
-	public void reloadFunctionChineseVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        updateFunction();
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-	
-	public void reloadFunctionEnglishVersion() throws Exception {
+	/**
+	 * <b>重载Welcome的英文界面</b>
+	 * @throws Exception
+	 */
+	private void reloadWelcomeEnglishVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
         p.load(in);
-        updateFunction();
+        updateWelcome();
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
-
-	
+	/**
+	 * <b>重载Welcome的中文界面</b>
+	 * @throws Exception
+	 */
+	private void reloadWelcomeChineseVersion() throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateWelcome();
+        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	/**
+	 * <b>重载电影列表的英文界面</b>
+	 * @throws Exception
+	 */
 	private void reloadMovieEnglishVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
@@ -232,7 +303,10 @@ public class TypeController {
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
-
+	/**
+	 * 重载电影列表的中文界面
+	 * @throws Exception
+	 */
 	private void reloadMovieChineseVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
         p = new Properties(); 
@@ -241,7 +315,6 @@ public class TypeController {
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
-	
 	@FXML
 	private void initialize() {
 		funny_button.setOnKeyPressed(new EventHandler<KeyEvent>() {

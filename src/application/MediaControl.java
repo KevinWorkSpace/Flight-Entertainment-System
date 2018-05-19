@@ -313,7 +313,6 @@ public class MediaControl extends BorderPane {
     
     public void backToChooseMovie() throws Exception {
 		mediaView.getMediaPlayer().stop();
-		hp.setMediaView(mediaView);
 		updateMovie();
 	}
     

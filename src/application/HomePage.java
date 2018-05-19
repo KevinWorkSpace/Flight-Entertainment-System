@@ -35,10 +35,6 @@ public class HomePage extends Application {
 	
 	private String lastMovieName;
 	
-	private MediaView mediaView;
-	
-	private String vname;
-	
 	private String filePath = "F:/Science/Ajava2/Project/Movies";
 	
 	private String cssPath = "F:/Science/Ajava2/Project/CSS";
@@ -47,80 +43,124 @@ public class HomePage extends Application {
 	
 	private Statement stmt;
 	
+	private String cssURL;
+	/**
+	 * <b>得到Statement对象</b>
+	 * @return Statement对象
+	 */
 	public Statement getStatement() {
 		return stmt;
 	}
-	
+	/**
+	 * <b>获得css文件夹的路径</b>
+	 * @return css文件夹路径
+	 */
 	public String getCssPath() {
 		return cssPath;
 	}
-	
+	/**
+	 * <b>获得movies文件夹的路径</b>
+	 * @return movies文件夹的路径
+	 */
 	public String getFilePath() {
 		return filePath;
 	}
-	
+	/**
+	 * <b>设置movies文件夹的路径</b>
+	 * @param filePat movies文件夹的路径
+	 */
 	public void setFilePath(String filePat) {
 		filePath = filePat;
 	}
-	
+	/**
+	 * <b>设置电影路径</b>
+	 * @param moviePat 电影路径
+	 */
 	public void setMoviePath(String moviePat) {
 		moviePath = moviePat;
 	}
-	
+	/**
+	 * <b>得到电影路径</b>
+	 * @return 电影路径
+	 */
 	public String getMoviePath() {
 		return moviePath;
 	}
-	
-	public String getVname() {
-		return vname;
-	}
-	
-	private String cssURL;
-	
+	/**
+	 * <b>得到css文件路径</b>
+	 * @return css文件路径
+	 */
 	public String getCssURL() {
 		return cssURL;
 	}
-	
-	public MediaView getMediaView() {
-		return mediaView;
-	}
-	
-	public void setMediaView(MediaView mediaView) {
-		this.mediaView = mediaView;
-	}
-	
+	/**
+	 * <b>得到看的上一个电影的名字</b>
+	 * @return 上一个电影的名字
+	 */
 	public String getLastMovieName() {
 		return lastMovieName;
 	}
-	
+	/**
+	 * <b>设置看的上一个电影的名字</b>
+	 * @param movieName 上一个电影的名字
+	 */
 	public void setLastMovieName(String movieName) {
 		this.lastMovieName = movieName;
 	}
-	
+	/**
+	 * <b>是否已经看过电影</b>
+	 * @return 是否看过电影
+	 */
 	public boolean haveSeenMovie() {
 		return seenMovie;
 	}
-	
+	/**
+	 * <b>设置是否看过电影</b>
+	 * @param isSeen 是否看过电影
+	 */
 	public void setSeenMovie(boolean isSeen) {
 		seenMovie = isSeen;
 	}
-	
+	/**
+	 * <b>得到menubar的控制器类对象</b>
+	 * @return menubar的控制器类对象
+	 */
 	public RootLayoutController getRootLayoutController() {
 		return rootLayoutController;
 	}
-	
+	/**
+	 * <b>得到menubar的Pane</b>
+	 * @return menubar的Pane
+	 */
 	public BorderPane getRootLayout() {
 		return rootLayout;
 	}
-		
+	/**
+	 * <b>得到语言的Properties文件</b>	
+	 * @return Properties文件
+	 */
 	public Properties getProperties() {
 		return p;
 	}
-	
+	/**
+	 * <b>得到Stage</b>
+	 * @return Stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
-	
+	/**
+	 * <b>加载程序界面.</b>
+	 * <p>
+	 * 程序初始化, 实现对数据库的连接, 和对Properties文件的连接, 以及加载menubar和welcome界面<br>
+	 * 并且实现了对menubar上的item的事件监听
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #reloadChineseVersion()}方法</li>
+	 *   <li>调用了{@link #reloadEnglishVersion()}方法</li>
+	 *   <li>调用了{@link #changeCSS(String, Scene)}方法</li>
+	 * </ol>
+	 */
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException, SQLException {
 		Connection conn = null;
@@ -129,7 +169,6 @@ public class HomePage extends Application {
  
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("成功加载MySQL驱动程序");
             conn = DriverManager.getConnection(url);
             stmt = conn.createStatement();
         } catch (SQLException e) {
@@ -191,7 +230,11 @@ public class HomePage extends Application {
         primaryStage.setTitle(p.getProperty("welcomeStage_title"));
         primaryStage.show();
 	}
-	
+	/**
+	 * <b>改变风格</b>
+	 * @param vname css文件的名字
+	 * @param scene 当前的Scene
+	 */
 	public void changeCSS(String vname, Scene scene) {
 		File file= new File(this.getCssPath());
 		String[] filelist = file.list();
@@ -205,7 +248,10 @@ public class HomePage extends Application {
 		scene.getStylesheets().clear();
 		scene.getStylesheets().add(cssURL);
 	}
-	
+	/**
+	 * <b>重载Welcome界面</b>
+	 * @throws Exception
+	 */
 	public void update() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Welcome.fxml"));
@@ -220,21 +266,42 @@ public class HomePage extends Application {
         rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title"));
 	}
-	
+	/**
+	 * <b>重载英文版Welcome界面.</b>
+	 * <p>
+	 * 通过切换英文Properties文件, 并重新加载welcome界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #update()}方法</li>
+	 * </ol>
+	 * @throws Exception
+	 */
 	private void reloadEnglishVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
         p.load(in);
         update();
 	}
-
+	/**
+	 * <b>重载中文版Welcome界面.</b>
+	 * <p>
+	 * 通过切换中文Properties文件, 并重新加载welcome界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #update()}方法</li>
+	 * </ol>
+	 * @throws Exception
+	 */
 	private void reloadChineseVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
         p = new Properties(); 
         p.load(in);
         update();
 	}
-
+	/**
+	 * <b>启动程序</b>
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

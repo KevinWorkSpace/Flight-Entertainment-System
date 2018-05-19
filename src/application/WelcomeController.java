@@ -22,110 +22,153 @@ public class WelcomeController {
 	
 	private Properties p; 
 	
-	private FunctionController functionController;
+	private TypeController typeController;
 	
-	private BorderPane functionPane;
+	private BorderPane typePane;
 	
 	private HomePage hp;
-	
-	public void setProperties(Properties p) {
-		this.p = p;
-	}
-	
-	public Properties getProperties() {
-		return p;
-	}
-	
-	public void setHomePage(HomePage hp) {
-		this.hp = hp;
-	}
-	
-	@FXML
-	private Button enter_button;
-	
-	public Button getEnter_button() {
-		return enter_button;
-	}
 	
 	@FXML
 	private Label welcome_label;
 	
+	@FXML
+	private Button enter_button;
+	/**
+	 * <b>设置语言的Properties文件</b>
+	 * @param p Properties文件
+	 */
+	public void setProperties(Properties p) {
+		this.p = p;
+	}
+	/**
+	 * <b>得到语言的Properties文件</b>
+	 * @return Properties文件
+	 */
+	public Properties getProperties() {
+		return p;
+	}
+	/**
+	 * <b>设置主页的引用</b>
+	 * @param hp 主页对象的引用
+	 */
+	public void setHomePage(HomePage hp) {
+		this.hp = hp;
+	}
+	/**
+	 * <b>得到Enter按钮的对象</b>
+	 * @return Enter按钮的对象
+	 */
+	public Button getEnter_button() {
+		return enter_button;
+	}
+	/**
+	 * <b>得到Welcome标题的对象</b>
+	 * @return Welcome标题的对象
+	 */
 	public Label getWelcome_label() {
 		return welcome_label;
 	}
-	
+	/**
+	 * <b>进入选择电影类型界面.</b>
+	 * <ol>
+	 *   <li>调用了{@link #updateType()}方法
+	 * </ol>
+	 * @throws Exception
+	 */
 	@FXML
-	public void enterSystem() {
-		functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button"));
-        functionController.getBack_button().setText(p.getProperty("back_button"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title"));
-        functionController.setHomePage(hp);
-        functionController.setProperties(p);
-        hp.getRootLayout().setCenter(functionPane);
-        //改变语言, 重新加载界面
+	public void enterSystem() throws Exception {
+		updateType();
+	}
+	/**
+	 * <b>重载选择电影类型的界面</b>
+	 * @throws Exception
+	 */
+	public void updateType() throws Exception {
+		FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseType.fxml"));
+        BorderPane root = (BorderPane)loader.load();
+        TypeController typeController = loader.getController();
+        typeController.setHomePage(hp);
+        typeController.setProperties(p);
+        typeController.getBack_button().setText(p.getProperty("back_button"));
+        typeController.getCartoon_button().setText(p.getProperty("cartoon_button"));
+        typeController.getFiction_button().setText(p.getProperty("fiction_button"));
+        typeController.getFunny_button().setText(p.getProperty("funny_button"));
+        typeController.getRomance_button().setText(p.getProperty("romance_button"));
+        typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
+        typeController.getSearch_button().setText(p.getProperty("search_button"));
+        hp.getStage().setTitle(p.getProperty("typeStage_title"));
         hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadChineseVersion();
+				reloadTypeChineseVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
         hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadEnglishVersion();
+				reloadTypeEnglishVersion();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
+        hp.getRootLayout().setCenter(root);
 	}
-	
-	public void update() {
-		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
-        try {
-			functionPane = (BorderPane)loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        functionController = loader.getController();
-        functionController.setProperties(p);
-        functionController.getAskFunction_label().setText(p.getProperty("askFunction_label"));
-        functionController.getMovie_button().setText(p.getProperty("movie_button"));
-        functionController.getBack_button().setText(p.getProperty("back_button"));
-        functionController.setHomePage(hp);
-        functionController.setLanguage("Chinese");
-        hp.getRootLayout().setCenter(functionPane);
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-        hp.getStage().setTitle(p.getProperty("functionStage_title"));
+	/**
+	 * <b>重载选择电影类型的中文界面.</b>
+	 * <p>
+	 * 通过切换中文Properties文件, 并重新加载Type界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateType()}方法</li>
+	 * </ol>
+	 * @throws Exception
+	 */
+	public void reloadTypeChineseVersion() throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType();
+		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
-	
-	public void reloadChineseVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        update();
+	/**
+	 * <b>重载选择电影类型的中文界面.</b>
+	 * <p>
+	 * 通过切换中文Properties文件, 并重新加载Type界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateType()}方法</li>
+	 * </ol>
+	 * @throws Exception
+	 */
+	public void reloadTypeEnglishVersion() throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType();
+		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
-	
-	public void reloadEnglishVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        update();
-	}
-	
+	/**
+	 * <b>Welcome界面初始化</b>
+	 * @throws Exception
+	 */
 	@FXML
 	private void initialize() throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseFunction.fxml"));
-        functionPane = (BorderPane)loader.load();
-        functionController = loader.getController();
+        loader.setLocation(getClass().getResource("ChooseType.fxml"));
+        typePane = (BorderPane)loader.load();
+        typeController = loader.getController();
         enter_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
-                    enterSystem();
+                    try {
+						enterSystem();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
                 }
             }
         });
