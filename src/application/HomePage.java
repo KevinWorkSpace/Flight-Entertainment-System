@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
 public class HomePage extends Application {
@@ -156,8 +155,8 @@ public class HomePage extends Application {
 	 * 并且实现了对menubar上的item的事件监听
 	 * </p>
 	 * <ol>
-	 *   <li>调用了{@link #reloadChineseVersion()}方法</li>
-	 *   <li>调用了{@link #reloadEnglishVersion()}方法</li>
+	 *   <li>调用了{@link #reloadChineseVersion(Properties)}方法</li>
+	 *   <li>调用了{@link #reloadEnglishVersion(Properties)}方法</li>
 	 *   <li>调用了{@link #changeCSS(String, Scene)}方法</li>
 	 * </ol>
 	 */
@@ -204,14 +203,14 @@ public class HomePage extends Application {
         welcomeController.getWelcome_label().setText(p.getProperty("welcome_label"));
         rootLayoutController.getChineseVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadChineseVersion();
+				reloadChineseVersion(p);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
         });
         rootLayoutController.getEnglishVersion().setOnAction((ActionEvent t) -> {
             try {
-				reloadEnglishVersion();
+				reloadEnglishVersion(p);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -250,9 +249,10 @@ public class HomePage extends Application {
 	}
 	/**
 	 * <b>重载Welcome界面</b>
-	 * @throws Exception
+	 * @param p Properties文件
+	 * @throws Exception 异常
 	 */
-	public void update() throws Exception {
+	public void update(Properties p) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Welcome.fxml"));
         BorderPane root = (BorderPane)loader.load();
@@ -265,6 +265,20 @@ public class HomePage extends Application {
         rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS"));
         rootLayoutController.getMenuLanguage().setText(p.getProperty("menuLanguage"));
         this.getStage().setTitle(p.getProperty("welcomeStage_title"));
+        this.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadChineseVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        this.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadEnglishVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
 	}
 	/**
 	 * <b>重载英文版Welcome界面.</b>
@@ -272,15 +286,16 @@ public class HomePage extends Application {
 	 * 通过切换英文Properties文件, 并重新加载welcome界面
 	 * </p>
 	 * <ol>
-	 *   <li>调用了{@link #update()}方法</li>
+	 *   <li>调用了{@link #update(Properties)}方法</li>
 	 * </ol>
-	 * @throws Exception
+	 * @param p Properties文件
+	 * @throws Exception 异常
 	 */
-	private void reloadEnglishVersion() throws Exception {
+	public void reloadEnglishVersion(Properties p) throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
         p.load(in);
-        update();
+        update(p);
 	}
 	/**
 	 * <b>重载中文版Welcome界面.</b>
@@ -288,21 +303,177 @@ public class HomePage extends Application {
 	 * 通过切换中文Properties文件, 并重新加载welcome界面
 	 * </p>
 	 * <ol>
-	 *   <li>调用了{@link #update()}方法</li>
+	 *   <li>调用了{@link #update(Properties)}方法</li>
 	 * </ol>
-	 * @throws Exception
+	 * @param p Properties文件
+	 * @throws Exception 异常
 	 */
-	private void reloadChineseVersion() throws Exception {
+	public void reloadChineseVersion(Properties p) throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
         p = new Properties(); 
         p.load(in);
-        update();
+        update(p);
 	}
 	/**
 	 * <b>启动程序</b>
-	 * @param args
+	 * @param args 参数
 	 */
 	public static void main(String[] args) {
 		launch(args);
+	}
+	/**
+	 * <b>重载选择电影类型界面</b>
+	 * @param p Properties文件
+	 * @throws Exception 异常
+	 */
+	public void updateType(Properties p) throws Exception {
+		FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseType.fxml"));
+        BorderPane root = (BorderPane)loader.load();
+        TypeController typeController = loader.getController();
+        typeController.setHomePage(this);
+        typeController.setProperties(p);
+        typeController.getBack_button().setText(p.getProperty("back_button"));
+        typeController.getCartoon_button().setText(p.getProperty("cartoon_button"));
+        typeController.getFiction_button().setText(p.getProperty("fiction_button"));
+        typeController.getFunny_button().setText(p.getProperty("funny_button"));
+        typeController.getRomance_button().setText(p.getProperty("romance_button"));
+        typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
+        typeController.getSearch_button().setText(p.getProperty("search_button"));
+        this.getStage().setTitle(p.getProperty("typeStage_title"));
+        this.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadTypeChineseVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        this.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadTypeEnglishVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        this.getRootLayout().setCenter(root);
+	}
+	/**
+	 * <b>重载中文版选择电影类型界面.</b>
+	 * <p>
+	 * 通过切换中文Properties文件, 并重新加载选择电影类型界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateType(Properties)}方法</li>
+	 * </ol>
+	 * @param p Properties文件
+	 * @throws Exception 异常
+	 */
+	public void reloadTypeChineseVersion(Properties p) throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType(p);
+		  this.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  this.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	/**
+	 * <b>重载英文版选择电影类型界面.</b>
+	 * <p>
+	 * 通过切换英文Properties文件, 并重新加载选择电影类型界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateType(Properties)}方法</li>
+	 * </ol>
+	 * @param p Properties文件
+	 * @throws Exception 异常
+	 */
+	public void reloadTypeEnglishVersion(Properties p) throws Exception {
+		  InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+		  p = new Properties(); 
+		  p.load(in);
+		  updateType(p);
+		  this.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+		  this.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	/**
+	 * <b>重载选择电影界面.</b>
+	 * @param p Properties文件
+ 	 * @throws Exception 异常
+	 */
+	public void updateMovie(Properties p) throws Exception {
+		FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
+        BorderPane moviePane = (BorderPane)loader.load();
+        MovieController movieController = loader.getController();
+        movieController.setHomePage(this);
+        movieController.setProperties(p);
+    	movieController.getBack_button().setText(p.getProperty("back_button"));
+    	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label"));
+    	movieController.getPlay_button().setText(p.getProperty("play_button"));
+    	movieController.getMovieInfo_label().setText("");
+    	movieController.getInfo_label().setText(p.getProperty("info_label"));
+    	//如果还没有看过电影
+    	if(!this.haveSeenMovie()) {
+    		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label"));
+    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button"));
+    	}
+    	else {
+    		movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label"));
+    		movieController.getLastMovie_button().setText(this.getLastMovieName());
+    	}
+    	this.getStage().setTitle(p.getProperty("movieStage_title"));
+        this.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadMovieChineseVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        this.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+            try {
+				reloadMovieEnglishVersion(p);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        });
+        this.getRootLayout().setCenter(moviePane);
+	}
+	/**
+	 * <b>重载英文版选择电影界面.</b>
+	 * <p>
+	 * 通过切换英文Properties文件, 并重新加载选择电影界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateMovie(Properties)}方法</li>
+	 * </ol>
+	 * @param p Properties文件
+	 * @throws Exception 异常
+	 */
+	public void reloadMovieEnglishVersion(Properties p) throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateMovie(p);
+        this.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        this.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
+	}
+	/**
+	 * <b>重载中文版选择电影界面.</b>
+	 * <p>
+	 * 通过切换中文Properties文件, 并重新加载选择电影界面
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateMovie(Properties)}方法</li>
+	 * </ol>
+	 * @param p Properties文件
+	 * @throws Exception 异常
+	 */
+	public void reloadMovieChineseVersion(Properties p) throws Exception {
+		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
+        p = new Properties(); 
+        p.load(in);
+        updateMovie(p);
+        this.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
+        this.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
 	}
 }

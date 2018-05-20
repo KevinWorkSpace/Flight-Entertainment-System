@@ -13,13 +13,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -56,43 +54,77 @@ public class MovieController {
 	
 	@FXML
 	private Label info_label;
-	
+	/**
+	 * <b>得到电影信息标题的label</b>
+	 * @return 电影信息标题的label
+	 */
 	public Label getInfo_label() {
 		return info_label;
 	}
-	
+	/**
+	 * <b>得到电影信息的label</b>
+	 * @return 电影信息的label
+	 */
 	public Label getMovieInfo_label() {
 		return movieInfo_label;
 	}
-	
+	/**
+	 * <b>得到播放按钮</b>
+	 * @return 播放按钮
+	 */
 	public Button getPlay_button() {
 		return play_button;
 	}
-	
+	/**
+	 * <b>得到后退按钮</b>
+	 * @return 后退按钮
+	 */
 	public Button getBack_button() {
 		return back_button;
 	}
-	
+	/**
+	 * <b>得到Properties文件</b>
+	 * @param p Properties文件
+	 */
 	public void setProperties(Properties p) {
 		this.p = p;
 	}
-	
+	/**
+	 * <b>设置HomePage</b>
+	 * @param hp HomePage类的对象
+	 */
 	public void setHomePage(HomePage hp) {
 		this.hp = hp;
 	}
-	
+	/**
+	 * <b>得到选择电影标题的label</b>
+	 * @return 电影标题的label
+	 */
 	public Label getMovieChoose_label() {
 		return movieChoose_label;
 	}
-	
+	/**
+	 * <b>设置是否看过电影的label</b>
+	 * @return 是否看过电影的label
+	 */
 	public Label getSeenBefore_label() {
 		return seenBefore_label;
 	}
-	
+	/**
+	 * <b>得到上一个电影的button</b>
+	 * @return 上一个电影的button
+	 */
 	public Button getLastMovie_button() {
 		return lastMovie_button;
 	}
-	
+	/**
+	 * <b>选择电影.</b>
+	 * <p>
+	 * 在电影列表中选中电影之后, 通过对数据库的查询找到对应的电影信息<br>
+	 * 然后通过对电影信息的解析, 将信息分行显示到电影信息的label上
+	 * </p>
+	 * @throws Exception 异常
+	 */
 	@FXML
 	public void selectMovie() throws Exception {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
@@ -224,7 +256,15 @@ public class MovieController {
 			}
 		}
 	}
-	
+	/**
+	 * <b>播放电影.</b>
+	 * <p>
+	 * 播放选中的电影
+	 * </p>
+	 * <ol>
+	 *   <li>调用了{@link #updateMedia()}方法</li>
+	 * </ol>
+	 */
 	@FXML
 	public void playMovie() {
 		if(movielist.getSelectionModel().getSelectedItem() != null) {
@@ -234,7 +274,9 @@ public class MovieController {
 			updateMedia();
 		}
 	}
-	
+	/**
+	 * <b>重载播放器</b>
+	 */
 	public void updateMedia() {
 		if(mp != null)
 			mp.pause();
@@ -278,7 +320,13 @@ public class MovieController {
         mediaControl.getBack_button().setText(p.getProperty("back_button"));
     	hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
 	}
-	
+	/**
+	 * <b>重载中文版媒体播放器</b>
+	 * <ol>
+	 *   <li>调用了({@link #updateMedia()}方法</li>
+	 * </ol>
+	 * @throws Exception 异常
+	 */
 	public void reloadMediaChineseVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
         p = new Properties(); 
@@ -287,7 +335,13 @@ public class MovieController {
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
 	}
-	
+	/**
+	 * <b>重载英文版媒体播放器</b>
+	 * <ol>
+	 *   <li>调用了({@link #updateMedia()}方法</li>
+	 * </ol>
+	 * @throws Exception 异常
+	 */
 	public void reloadMediaEnglishVersion() throws Exception {
 		InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
         p = new Properties(); 
@@ -296,7 +350,6 @@ public class MovieController {
         hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
         hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
 	}
-	
 	
 	@FXML
 	private void initialize() throws Exception {
@@ -353,61 +406,16 @@ public class MovieController {
             }
         });
 	}
-	
+	/**
+	 * <b>返回选择电影类型的界面</b>
+	 * @throws Exception 异常
+	 */
 	public void backToChooseType() throws Exception {
-		updateType();
+		hp.updateType(p);
 	}
-	
-	public void updateType() throws Exception {
-		FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseType.fxml"));
-        BorderPane root = (BorderPane)loader.load();
-        TypeController typeController = loader.getController();
-        typeController.setProperties(p);
-        typeController.setHomePage(hp);
-        typeController.getBack_button().setText(p.getProperty("back_button"));
-        typeController.getCartoon_button().setText(p.getProperty("cartoon_button"));
-        typeController.getFiction_button().setText(p.getProperty("fiction_button"));
-        typeController.getFunny_button().setText(p.getProperty("funny_button"));
-        typeController.getRomance_button().setText(p.getProperty("romance_button"));
-        typeController.getChooseType_label().setText(p.getProperty("chooseType_label"));
-        typeController.getSearch_button().setText(p.getProperty("search_button"));
-        hp.getStage().setTitle(p.getProperty("typeStage_title"));
-        hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            try {
-				reloadTypeChineseVersion();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        });
-        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            try {
-				reloadTypeEnglishVersion();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        });
-        hp.getRootLayout().setCenter(root);
-	}
-	
-	public void reloadTypeChineseVersion() throws Exception {
-		  InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
-		  p = new Properties(); 
-		  p.load(in);
-		  updateType();
-		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-	
-	public void reloadTypeEnglishVersion() throws Exception {
-		  InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
-		  p = new Properties(); 
-		  p.load(in);
-		  updateType();
-		  hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-		  hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-
+	/**
+	 * <b>观看上一个电影</b>
+	 */
 	@FXML
 	public void continueWatching() {
 		movieName = hp.getLastMovieName();
@@ -436,31 +444,33 @@ public class MovieController {
 				break;
 			}
 		}
-		String MEDIA_URL = "file:///" + hp.getFilePath() + "/" + movieType + "/" + movieName.replaceAll(" ","%20");;
-		if(MEDIA_URL != null) {
-			Media media = new Media(MEDIA_URL);
-			mp = new MediaPlayer(media);
-			mp.setAutoPlay(true);
-			MediaControl mediaControl = new MediaControl(mp);
-			this.hp.getRootLayout().setCenter(mediaControl);
-			this.hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-	            try {
-					reloadMediaChineseVersion();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	        });
-	        this.hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-	            try {
-					reloadMediaEnglishVersion();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	        });
-	        mediaControl.setHomePage(hp);
-	        mediaControl.setProperties(p);
-        	mediaControl.getBack_button().setText(p.getProperty("back_button"));
-        	this.hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
+		if(flag) {
+			String MEDIA_URL = "file:///" + hp.getFilePath() + "/" + movieType + "/" + movieName.replaceAll(" ","%20");;
+			if(MEDIA_URL != null) {
+				Media media = new Media(MEDIA_URL);
+				mp = new MediaPlayer(media);
+				mp.setAutoPlay(true);
+				MediaControl mediaControl = new MediaControl(mp);
+				this.hp.getRootLayout().setCenter(mediaControl);
+				this.hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
+		            try {
+						reloadMediaChineseVersion();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		        });
+		        this.hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
+		            try {
+						reloadMediaEnglishVersion();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		        });
+		        mediaControl.setHomePage(this.hp);
+		        mediaControl.setProperties(p);
+	        	mediaControl.getBack_button().setText(p.getProperty("back_button"));
+	        	this.hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
+			}
 		}
 	}
 }

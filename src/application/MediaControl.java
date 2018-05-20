@@ -1,10 +1,5 @@
 package application;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javafx.application.Platform;
@@ -12,7 +7,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -31,36 +25,57 @@ import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 public class MediaControl extends BorderPane {
+	
     private MediaPlayer mp;
-    private HomePage hp;
-    private MediaView mediaView;
-    private final boolean repeat = false;
-    private boolean stopRequested = false;
-    private boolean atEndOfMedia = false;
-    private Duration duration;
-    private Slider timeSlider;
-    private Label playTime;
-    private Slider volumeSlider;
-    private Button back_button;
-    private HBox mediaBar;
-    private Properties p;
     
+    private HomePage hp;
+    
+    private MediaView mediaView;
+    
+    private final boolean repeat = false;
+    
+    private boolean stopRequested = false;
+    
+    private boolean atEndOfMedia = false;
+    
+    private Duration duration;
+    
+    private Slider timeSlider;
+    
+    private Label playTime;
+    
+    private Slider volumeSlider;
+    
+    private Button back_button;
+    
+    private HBox mediaBar;
+    
+    private Properties p;
+    /**
+     * <b>设置Properties文件</b>
+     * @param p Properties文件
+     */
     public void setProperties(Properties p) {
     	this.p = p;
     }
-    
+    /**
+     * <b>设置HomePage</b>
+     * @param hp HomePage类的对象
+     */
     public void setHomePage(HomePage hp) {
     	this.hp = hp;
     }
-    
+    /**
+     * <b>得到返回按钮</b>
+     * @return 返回按钮
+     */
     public Button getBack_button() {
     	return back_button;
     }
-    
-    public MediaView getMediaView() {
-    	return mediaView;
-    }
- 
+    /**
+     * <b>控制媒体播放</b>
+     * @param mp MediaPlayer的对象
+     */
     public MediaControl(final MediaPlayer mp) {
         this.mp = mp;
         setStyle("-fx-background-color: #bfc2c7;");
@@ -73,7 +88,6 @@ public class MediaControl extends BorderPane {
         mediaBar.setAlignment(Pos.CENTER);
         mediaBar.setPadding(new Insets(5, 10, 5, 10));
         BorderPane.setAlignment(mediaBar, Pos.CENTER);
-        
         //Add Back button
         back_button = new Button("返回");
         back_button.setPrefWidth(50);
@@ -106,7 +120,6 @@ public class MediaControl extends BorderPane {
             }
         });
         mediaBar.getChildren().add(back_button);
- 
         final Button playButton  = new Button(">");
         playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -203,7 +216,7 @@ public class MediaControl extends BorderPane {
             }
        });
         mediaBar.getChildren().add(playButton);
-     // Add spacer
+        // Add spacer
         Label spacer = new Label("   ");
         mediaBar.getChildren().add(spacer);
          
@@ -274,71 +287,22 @@ public class MediaControl extends BorderPane {
         setBottom(mediaBar); 
      }
     
-    public void updateMovie() throws Exception {
-    	FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseMovie.fxml"));
-        BorderPane moviePane = (BorderPane)loader.load();
-        MovieController movieController = loader.getController();
-        movieController.setHomePage(hp);
-        movieController.setProperties(p);
-    	movieController.getBack_button().setText(p.getProperty("back_button"));
-    	movieController.getMovieChoose_label().setText(p.getProperty("movieChoose_label"));
-    	movieController.getPlay_button().setText(p.getProperty("play_button"));
-    	movieController.getMovieInfo_label().setText("");
-    	movieController.getInfo_label().setText(p.getProperty("info_label"));
-    	if(!hp.haveSeenMovie()) {
-    		movieController.getLastMovie_button().setText(p.getProperty("lastMovie_button"));
-    	}
-    	else {
-    		movieController.getLastMovie_button().setText(hp.getLastMovieName());
-    	}
-    	movieController.getSeenBefore_label().setText(p.getProperty("seenBefore_label"));
-    	hp.getStage().setTitle(p.getProperty("movieStage_title"));
-        hp.getRootLayout().setCenter(moviePane);
-        hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
-            try {
-				reloadMovieChineseVersion();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        });
-        hp.getRootLayoutController().getEnglishVersion().setOnAction((ActionEvent t) -> {
-            try {
-				reloadMovieEnglishVersion();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-        });
-    }
-    
+    /**
+     * <b>返回选择电影的界面</b>
+     * @throws Exception 异常
+     */
     public void backToChooseMovie() throws Exception {
 		mediaView.getMediaPlayer().stop();
-		updateMovie();
+		hp.updateMovie(p);
 	}
-    
-    private void reloadMovieEnglishVersion() throws Exception {
-    	InputStream in = new BufferedInputStream(new FileInputStream("English.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        updateMovie();
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-
-	private void reloadMovieChineseVersion() throws Exception {
-		InputStream in = new BufferedInputStream(new FileInputStream("Chinese.properties")); 
-        p = new Properties(); 
-        p.load(in);
-        updateMovie();
-        hp.getRootLayoutController().getMenuLanguage().setText(p.getProperty("menuLanguage"));
-        hp.getRootLayoutController().getMenuCSS().setText(p.getProperty("menuCSS"));
-	}
-
-
+	/**
+	 * <b>更新播放器控件的Value</b>
+	 */
 	protected void updateValues() {
 	  if (playTime != null && timeSlider != null && volumeSlider != null) {
 	     Platform.runLater(new Runnable() {
-	        public void run() {
+	        @SuppressWarnings("deprecation")
+			public void run() {
 	          Duration currentTime = mp.getCurrentTime();
 	          playTime.setText(formatTime(currentTime, duration));
 	          timeSlider.setDisable(duration.isUnknown());
