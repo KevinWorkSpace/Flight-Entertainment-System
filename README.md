@@ -14,5 +14,11 @@
     
     1. Homepage类, url中的数据库名字, 用户名, 密码
     2. 数据库需要建立movies表, 有三个字段: idmovies(主键, 要设成auto-increment), name, 和info
+    3. 如果不了解数据库的使用, 请直接注释掉数据库的代码即可
     
 五. 关于电影信息的爬取, 爬取工具已经上传在ScrapingUtil中
+
+六. 关于logo以及背景图片
+
+    1. 要建一个Resource文件夹, 并在里面再建logo文件夹和image文件夹, logo文件夹中放入logo图片, image文件夹中放入背景图片
+    2. HomePage类, 修改logoPath变量的默认值
