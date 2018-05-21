@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -37,6 +38,8 @@ public class HomePage extends Application {
 	private String filePath = "F:/Science/Ajava2/Project/Movies";
 	
 	private String cssPath = "F:/Science/Ajava2/Project/CSS";
+	
+	private String logoPath = "F:/Science/Ajava2/Project/Resource/logo";
 	
 	private static String moviePath;
 	
@@ -184,6 +187,10 @@ public class HomePage extends Application {
 		cssURL = "file:///" + this.getCssPath() + "/" + filelist[0];
         seenMovie = false;
 		stage = primaryStage;
+		File fileLogo = new File(this.logoPath);
+		String[] filelistLogo = fileLogo.list();
+		String logoURL = "file:///" + this.logoPath + "/" + filelistLogo[0];
+		stage.getIcons().add(new Image(logoURL));
 		FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("RootLayout.fxml"));
         rootLayout = (BorderPane) loader.load();
