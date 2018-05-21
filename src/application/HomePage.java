@@ -188,7 +188,6 @@ public class HomePage extends Application {
         loader.setLocation(this.getClass().getResource("RootLayout.fxml"));
         rootLayout = (BorderPane) loader.load();
         rootLayoutController = loader.getController();
-        rootLayoutController.setHomePage(this);
         rootLayoutController.getMenuCSS().setText(p.getProperty("menuCSS"));
         Scene scene = new Scene(rootLayout);
         scene.getStylesheets().add(cssURL);

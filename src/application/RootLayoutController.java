@@ -1,13 +1,7 @@
 package application;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -27,8 +21,6 @@ public class RootLayoutController {
 	private MenuItem v2;
 	
 	private MenuItem v3;
-	
-	private HomePage hp;
 	
 	private MenuItem englishVersion;
 	
@@ -81,13 +73,6 @@ public class RootLayoutController {
 	 */
 	public MenuItem getChineseVersion() {
 		return chineseVersion;
-	}
-	/**
-	 * <b>设置HomePage</b>
-	 * @param hp HomePage类的对象
-	 */
-	public void setHomePage(HomePage hp) {
-		this.hp = hp;
 	}
 	
 	@FXML

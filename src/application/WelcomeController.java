@@ -60,9 +60,6 @@ public class WelcomeController {
 	
 	@FXML
 	private void initialize() throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ChooseType.fxml"));
-        loader.load();
         enter_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
