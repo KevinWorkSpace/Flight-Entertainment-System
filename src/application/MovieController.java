@@ -368,7 +368,18 @@ public class MovieController {
 			items.add(name);
 		}
 		movielist.setItems(items);
-		
+		lastMovie_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+					try {
+						continueWatching();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
 		back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
