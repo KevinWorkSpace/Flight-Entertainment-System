@@ -293,7 +293,7 @@ public class MovieController {
 			}
 		}
 		else {
-			MEDIA_URL = "file:///" + hp.getMoviePath();
+			MEDIA_URL = "file:///" + hp.getMoviePath().replaceAll(" ","%20");
 		}
 		Media media = new Media(MEDIA_URL);
 		mp = new MediaPlayer(media);
