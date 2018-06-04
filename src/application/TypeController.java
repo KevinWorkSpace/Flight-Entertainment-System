@@ -173,7 +173,7 @@ public class TypeController {
 		}
 		if(flag) {
 			this.hp.setMoviePath(hp.getFilePath() + "/" + movieType + "/" + movieName);
-			hp.updateMovie(p);
+			this.hp.updateMovie(p);
 		}
 	}
 	/**
