@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -160,7 +161,8 @@ public class TypeController {
 			int j=0;
 			for(j=0; j<inFilelist.length; j++) {
 				String name = inFilelist[j].substring(0,inFilelist[j].lastIndexOf("."));
-				if(search_text.getText().equals(name)) {
+				boolean isMatch = Pattern.matches(".*" + search_text.getText() + ".*", name);
+				if(isMatch) {
 					flag = true;
 					movieType = filelist[i];
 					movieName = inFilelist[j];
