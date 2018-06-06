@@ -167,7 +167,7 @@ public class HomePage extends Application {
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException, SQLException {
 		Connection conn = null;
         String url = "jdbc:mysql://localhost:3306/crashcourse?"
-                + "user=root&password=Zhchming1&useUnicode=true&characterEncoding=UTF8";
+                + "user=root&password=Zhchming1&useUnicode=true&characterEncoding=UTF8&useSSL=true";
  
         try {
             Class.forName("com.mysql.jdbc.Driver");
