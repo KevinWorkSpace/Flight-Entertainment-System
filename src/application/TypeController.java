@@ -37,6 +37,9 @@ public class TypeController {
 	@FXML
 	private Button search_button;
 	
+	@FXML
+	private Label notion_label;
+	
 	private HomePage hp;
 	
 	private Properties p;
@@ -176,6 +179,9 @@ public class TypeController {
 		if(flag) {
 			this.hp.setMoviePath(hp.getFilePath() + "/" + movieType + "/" + movieName);
 			this.hp.updateMovie(p);
+		}
+		else {
+			this.notion_label.setText(p.getProperty("notion_label"));
 		}
 	}
 	/**

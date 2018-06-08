@@ -18,10 +18,11 @@
             <Button fx:id="fiction_button" mnemonicParsing="false" onAction="#enterFictionMovieList" prefHeight="23.0" prefWidth="125.0" text="科幻悬疑" />
             <Button fx:id="romance_button" mnemonicParsing="false" onAction="#enterRomanceMovieList" prefHeight="23.0" prefWidth="125.0" text="浪漫爱情" />
             <Button fx:id="cartoon_button" mnemonicParsing="false" onAction="#enterCartoonMovieList" prefHeight="23.0" prefWidth="125.0" text="儿童动画" />
-            <HBox alignment="CENTER" prefHeight="20.0" prefWidth="600.0" spacing="40.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <TextField fx:id="search_text" />
+                  <TextField fx:id="search_text" alignment="CENTER" />
                   <Button fx:id="search_button" mnemonicParsing="false" onAction="#search" text="搜索" />
+                  <Label fx:id="notion_label" prefHeight="15.0" prefWidth="188.0" />
                </children>
             </HBox>
          </children>

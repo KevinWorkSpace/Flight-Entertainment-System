@@ -129,7 +129,6 @@ public class MediaControl extends BorderPane {
                     
                     if (status == Status.UNKNOWN  || status == Status.HALTED)
                     {
-                       // don't do anything in these states
                        return;
                     }
              
@@ -137,7 +136,6 @@ public class MediaControl extends BorderPane {
                          || status == Status.READY
                          || status == Status.STOPPED)
                       {
-                         // rewind the movie if we're sitting at the end
                          if (atEndOfMedia) {
                             mp.seek(mp.getStartTime());
                             atEndOfMedia = false;
@@ -155,7 +153,6 @@ public class MediaControl extends BorderPane {
          
                 if (status == Status.UNKNOWN  || status == Status.HALTED)
                 {
-                   // don't do anything in these states
                    return;
                 }
          
@@ -163,7 +160,6 @@ public class MediaControl extends BorderPane {
                      || status == Status.READY
                      || status == Status.STOPPED)
                   {
-                     // rewind the movie if we're sitting at the end
                      if (atEndOfMedia) {
                         mp.seek(mp.getStartTime());
                         atEndOfMedia = false;
@@ -232,7 +228,6 @@ public class MediaControl extends BorderPane {
         timeSlider.valueProperty().addListener(new InvalidationListener() {
             public void invalidated(Observable ov) {
                if (timeSlider.isValueChanging()) {
-               // multiply duration by percentage calculated by slider position
                   mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
                }
             }
@@ -250,17 +245,14 @@ public class MediaControl extends BorderPane {
         });
         mediaBar.getChildren().add(timeSlider);
         
-        // Add Play label
         playTime = new Label();
         playTime.setPrefWidth(130);
         playTime.setMinWidth(50);
         mediaBar.getChildren().add(playTime);
          
-        // Add the volume label
         Label volumeLabel = new Label("Vol: ");
         mediaBar.getChildren().add(volumeLabel);
          
-        // Add Volume slider
         volumeSlider = new Slider();        
         volumeSlider.setPrefWidth(70);
         volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
