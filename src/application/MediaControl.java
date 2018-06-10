@@ -1,5 +1,6 @@
 package application;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Properties;
 
 import javafx.application.Platform;
@@ -120,6 +121,32 @@ public class MediaControl extends BorderPane {
             }
         });
         mediaBar.getChildren().add(back_button);
+        Button backup = new Button("<<");
+        backup.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToChooseMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                else if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+                else if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            }
+        });
+        backup.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	Duration d = Duration.millis(10000);
+        		mp.seek(mp.getCurrentTime().subtract(d));
+            }
+    	});
+        mediaBar.getChildren().add(backup);
         final Button playButton  = new Button(">");
         playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -131,10 +158,10 @@ public class MediaControl extends BorderPane {
 						e.printStackTrace();
 					}
                 }
-                if(event.getCode() == KeyCode.ADD) {
+                else if(event.getCode() == KeyCode.ADD) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
             	}
-            	if(event.getCode() == KeyCode.SUBTRACT) {
+                else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
             	}
             }
@@ -204,6 +231,32 @@ public class MediaControl extends BorderPane {
             }
        });
         mediaBar.getChildren().add(playButton);
+        Button stepon = new Button(">>");
+        stepon.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToChooseMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                else if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+                else if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            }
+        });
+        stepon.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	Duration d = Duration.millis(10000);
+        		mp.seek(mp.getCurrentTime().add(d));
+            }
+    	});
+        mediaBar.getChildren().add(stepon);
         // Add spacer
         Label spacer = new Label("   ");
         mediaBar.getChildren().add(spacer);
@@ -239,6 +292,14 @@ public class MediaControl extends BorderPane {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+            	}
+            	else if(event.getCode() == KeyCode.RIGHT) {
+            		Duration d = Duration.millis(10000);
+            		mp.seek(mp.getCurrentTime().add(d));
+            	}
+            	else if(event.getCode() == KeyCode.LEFT) {
+            		Duration d = Duration.millis(10000);
+            		mp.seek(mp.getCurrentTime().subtract(d));
             	}
             }
         });
