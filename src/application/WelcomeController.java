@@ -57,20 +57,4 @@ public class WelcomeController {
 	public void enterSystem() throws Exception {
 		hp.updateType(p);
 	}
-	
-	@FXML
-	private void initialize() throws Exception {
-        enter_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    try {
-						enterSystem();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-                }
-            }
-        });
-	}
 }
