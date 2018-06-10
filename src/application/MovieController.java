@@ -371,9 +371,9 @@ public class MovieController {
 		lastMovie_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						continueWatching();
+						backToChooseType();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -383,7 +383,7 @@ public class MovieController {
 		back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
 						backToChooseType();
 					} catch (Exception e) {
@@ -395,9 +395,9 @@ public class MovieController {
 		movielist.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						selectMovie();
+						backToChooseType();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -407,9 +407,9 @@ public class MovieController {
 		play_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						playMovie();
+						backToChooseType();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

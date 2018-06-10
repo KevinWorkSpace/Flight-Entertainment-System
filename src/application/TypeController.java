@@ -195,12 +195,48 @@ public class TypeController {
 
 	@FXML
 	private void initialize() {
-		funny_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		this.search_text.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						enterFunnyMovieList();
+						backToWelcome();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToWelcome();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.search_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToWelcome();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        });
+		this.funny_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToWelcome();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -210,9 +246,9 @@ public class TypeController {
 		this.fiction_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						enterFictionMovieList();
+						backToWelcome();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -222,9 +258,9 @@ public class TypeController {
 		this.romance_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						enterRomanceMovieList();
+						backToWelcome();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -234,9 +270,9 @@ public class TypeController {
 		this.cartoon_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
-						enterCartoonMovieList();
+						backToWelcome();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -104,7 +104,7 @@ public class MediaControl extends BorderPane {
         back_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+                if (event.getCode() == KeyCode.ESCAPE) {
 					try {
 						backToChooseMovie();
 					} catch (Exception e) {
@@ -124,27 +124,19 @@ public class MediaControl extends BorderPane {
         playButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                	Status status = mp.getStatus();
-                    
-                    if (status == Status.UNKNOWN  || status == Status.HALTED)
-                    {
-                       return;
-                    }
-             
-                      if ( status == Status.PAUSED
-                         || status == Status.READY
-                         || status == Status.STOPPED)
-                      {
-                         if (atEndOfMedia) {
-                            mp.seek(mp.getStartTime());
-                            atEndOfMedia = false;
-                         }
-                         mp.play();
-                         } else {
-                           mp.pause();
-                         }
+                if (event.getCode() == KeyCode.ESCAPE) {
+					try {
+						backToChooseMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
                 }
+                if(event.getCode() == KeyCode.ADD) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
+            	}
+            	if(event.getCode() == KeyCode.SUBTRACT) {
+            		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
             }
         });
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -238,8 +230,15 @@ public class MediaControl extends BorderPane {
             	if(event.getCode() == KeyCode.ADD) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
             	}
-            	if(event.getCode() == KeyCode.SUBTRACT) {
+            	else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            	else if(event.getCode() == KeyCode.ESCAPE) {
+            		try {
+						backToChooseMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
@@ -263,8 +262,15 @@ public class MediaControl extends BorderPane {
             	if(event.getCode() == KeyCode.ADD) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
             	}
-            	if(event.getCode() == KeyCode.SUBTRACT) {
+            	else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
+            	}
+            	else if(event.getCode() == KeyCode.ESCAPE) {
+            		try {
+						backToChooseMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
