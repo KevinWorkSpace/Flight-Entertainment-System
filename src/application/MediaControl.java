@@ -1,6 +1,5 @@
 package application;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Properties;
 
 import javafx.application.Platform;
@@ -15,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -280,6 +280,12 @@ public class MediaControl extends BorderPane {
                   mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
                }
             }
+        });
+        timeSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        	 @Override
+        	 public void handle(MouseEvent t) {
+        		 mp.seek(Duration.seconds(timeSlider.getValue()));
+        	 }
         });
         timeSlider.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

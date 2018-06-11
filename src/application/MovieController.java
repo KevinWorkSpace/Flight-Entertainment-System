@@ -402,8 +402,23 @@ public class MovieController {
 						e.printStackTrace();
 					}
                 }
+                else if (event.getCode() == KeyCode.ENTER) {
+					try {
+						playMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                else if (event.getCode() == KeyCode.SPACE) {
+					try {
+						selectMovie();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
             }
         });
+		
 		play_button.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
