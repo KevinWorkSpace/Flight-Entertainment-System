@@ -75,10 +75,13 @@ public class MediaControl extends BorderPane {
     }
     /**
      * <b>控制媒体播放</b>
-     * @param mp MediaPlayer的对象
+     * @param hp HomePage类的对象的引用
+     * @param mp MediaPlayer类对象的引用
+     * @param isContinue 是否续看
      */
-    public MediaControl(final MediaPlayer mp) {
-        this.mp = mp;
+    public MediaControl(HomePage hp, final MediaPlayer mp, boolean isContinue) {
+        this.hp = hp;
+    	this.mp = mp;
         setStyle("-fx-background-color: #bfc2c7;");
         mediaView = new MediaView(mp);
         Pane mvPane = new Pane() {                };
@@ -230,6 +233,7 @@ public class MediaControl extends BorderPane {
                 }
             }
        });
+        
         mediaBar.getChildren().add(playButton);
         Button stepon = new Button(">>");
         stepon.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -301,6 +305,11 @@ public class MediaControl extends BorderPane {
             		Duration d = Duration.millis(10000);
             		mp.seek(mp.getCurrentTime().subtract(d));
             	}
+            	else if(event.getCode() == KeyCode.UP) {
+            		if(isContinue) {
+                    	mp.seek(hp.getLastDuration());
+                    }
+            	}
             }
         });
         mediaBar.getChildren().add(timeSlider);
@@ -351,7 +360,8 @@ public class MediaControl extends BorderPane {
      * @throws Exception 异常
      */
     public void backToChooseMovie() throws Exception {
-		mediaView.getMediaPlayer().stop();
+		mediaView.getMediaPlayer().pause();
+		hp.setLastDuration(mp.getCurrentTime());
 		hp.updateMovie(p);
 	}
 	/**

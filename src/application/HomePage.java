@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class HomePage extends Application {
 	
@@ -46,6 +47,22 @@ public class HomePage extends Application {
 	private Statement stmt;
 	
 	private String cssURL;
+	
+	private Duration lastDuration;
+	/**
+	 * <b>获得观看上一部电影的时间</b>
+	 * @return 电影时间
+	 */
+	public Duration getLastDuration() {
+		return lastDuration;
+	}
+	/**
+	 * <b>设置观看上一部电影的时间</b>
+	 * @param lastDuration 电影时间
+	 */
+	public void setLastDuration(Duration lastDuration) {
+		this.lastDuration = lastDuration;
+	}
 	/**
 	 * <b>得到Statement对象</b>
 	 * @return Statement对象

@@ -298,7 +298,7 @@ public class MovieController {
 		Media media = new Media(MEDIA_URL);
 		mp = new MediaPlayer(media);
 		mp.setAutoPlay(true);
-		MediaControl mediaControl = new MediaControl(mp);
+		MediaControl mediaControl = new MediaControl(hp, mp, false);
 		mediaControl.setProperties(p);
 		hp.getRootLayout().setCenter(mediaControl);
 		hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
@@ -429,6 +429,9 @@ public class MovieController {
 	 */
 	@FXML
 	public void continueWatching() {
+		if(hp.getLastMovieName() == null) {
+			return;
+		}
 		movieName = hp.getLastMovieName();
 		hp.setLastMovieName(movieName);
 		hp.setSeenMovie(true);
@@ -461,7 +464,7 @@ public class MovieController {
 				Media media = new Media(MEDIA_URL);
 				mp = new MediaPlayer(media);
 				mp.setAutoPlay(true);
-				MediaControl mediaControl = new MediaControl(mp);
+				MediaControl mediaControl = new MediaControl(this.hp, mp, true);
 				this.hp.getRootLayout().setCenter(mediaControl);
 				this.hp.getRootLayoutController().getChineseVersion().setOnAction((ActionEvent t) -> {
 		            try {
@@ -477,7 +480,6 @@ public class MovieController {
 						e.printStackTrace();
 					}
 		        });
-		        mediaControl.setHomePage(this.hp);
 		        mediaControl.setProperties(p);
 	        	mediaControl.getBack_button().setText(p.getProperty("back_button"));
 	        	this.hp.getStage().setTitle(p.getProperty("mediaStage_title") + " " + movieName);
