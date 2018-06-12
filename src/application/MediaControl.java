@@ -115,12 +115,32 @@ public class MediaControl extends BorderPane {
 						e.printStackTrace();
 					}
                 }
-                if(event.getCode() == KeyCode.ADD) {
+                else if(event.getCode() == KeyCode.ADD) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 + 0.2);
             	}
-            	if(event.getCode() == KeyCode.SUBTRACT) {
+                else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
             	}
+                else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         mediaBar.getChildren().add(back_button);
@@ -141,6 +161,26 @@ public class MediaControl extends BorderPane {
                 else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
             	}
+                else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         backup.setOnAction(new EventHandler<ActionEvent>() {
@@ -167,6 +207,26 @@ public class MediaControl extends BorderPane {
                 else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
             	}
+                else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -252,6 +312,26 @@ public class MediaControl extends BorderPane {
                 else if(event.getCode() == KeyCode.SUBTRACT) {
             		mp.setVolume(volumeSlider.getValue() / 100.0 - 0.2);
             	}
+                else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         stepon.setOnAction(new EventHandler<ActionEvent>() {
@@ -316,6 +396,26 @@ public class MediaControl extends BorderPane {
                     	mp.seek(hp.getLastDuration());
                     }
             	}
+            	else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         mediaBar.getChildren().add(timeSlider);
@@ -348,6 +448,26 @@ public class MediaControl extends BorderPane {
 						e.printStackTrace();
 					}
             	}
+            	else if(event.getCode() == KeyCode.ENTER) {
+	            	Status status = mp.getStatus();
+	                if (status == Status.UNKNOWN  || status == Status.HALTED)
+	                {
+	                   return;
+	                }
+             
+                  if ( status == Status.PAUSED
+                     || status == Status.READY
+                     || status == Status.STOPPED)
+                  {
+                     if (atEndOfMedia) {
+                        mp.seek(mp.getStartTime());
+                        atEndOfMedia = false;
+                     }
+                     mp.play();
+                     } else {
+                       mp.pause();
+                     }
+                 }
             }
         });
         volumeSlider.valueProperty().addListener(new InvalidationListener() {
